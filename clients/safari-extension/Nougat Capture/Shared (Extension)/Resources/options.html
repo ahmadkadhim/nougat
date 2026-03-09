@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Nougat Options</title>
+    <style>
+      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 20px; max-width: 700px; }
+      label { display: block; margin-top: 12px; font-weight: 600; }
+      input { width: 100%; padding: 8px; margin-top: 6px; box-sizing: border-box; }
+      button { margin-top: 12px; margin-right: 8px; padding: 8px 12px; }
+      #status { margin-top: 16px; white-space: pre-wrap; font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <h2>Nougat Extension Settings</h2>
+
+    <label for="apiBaseUrl">API Base URL</label>
+    <input id="apiBaseUrl" placeholder="https://your-deployment.convex.site" />
+
+    <label for="token">Device Token</label>
+    <input id="token" placeholder="kbx_..." />
+
+    <label for="deviceId">Device ID</label>
+    <input id="deviceId" placeholder="dev_..." />
+
+    <label for="sourceApp">Source App Label</label>
+    <input id="sourceApp" placeholder="chrome_extension" />
+
+    <hr />
+
+    <label for="deviceName">Register Device Name</label>
+    <input id="deviceName" placeholder="Ahmad MacBook Chrome" />
+
+    <label for="platform">Register Platform</label>
+    <input id="platform" placeholder="chrome" />
+
+    <button id="save">Save Settings</button>
+    <button id="register">Register Device</button>
+    <button id="rotate">Rotate Token</button>
+
+    <div id="status">Ready.</div>
+
+    <script src="options.js" type="module"></script>
+  </body>
+</html>

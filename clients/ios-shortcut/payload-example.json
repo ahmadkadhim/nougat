@@ -1,0 +1,13 @@
+{
+  "source_url": "https://x.com/someuser/status/1234567890",
+  "captured_at": 1762651200000,
+  "capture_method": "share_sheet",
+  "source_app": "ios_share_sheet",
+  "title_hint": "Optional title from app context",
+  "selected_text": "Optional selected text",
+  "source_metadata": {
+    "ios_app": "com.apple.mobilesafari",
+    "device_name": "iPhone",
+    "input_type": "url"
+  }
+}

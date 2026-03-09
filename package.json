@@ -1,0 +1,36 @@
+{
+  "name": "nougat",
+  "description": "Nougat personal knowledge capture and X bookmark sync.",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "convex dev",
+    "dev:web": "vite dev --port 3000",
+    "deploy": "convex deploy",
+    "build:web": "vite build",
+    "start:web": "vite preview --port 3000",
+    "test": "node --test --experimental-strip-types --experimental-specifier-resolution=node tests/**/*.test.ts",
+    "sync:markdown": "node --experimental-strip-types scripts/sync-markdown.ts",
+    "lint": "echo 'No linter configured yet'"
+  },
+  "dependencies": {
+    "@convex-dev/better-auth": "^0.10.13",
+    "@tanstack/react-router": "^1.132.0",
+    "@tanstack/react-start": "^1.132.0",
+    "@tanstack/router-plugin": "^1.132.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "better-auth": "^1.4.9",
+    "convex": "^1.32.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.0",
+    "@types/node": "^25.3.3",
+    "typescript": "^5.7.3",
+    "vite": "^7.1.9"
+  }
+}

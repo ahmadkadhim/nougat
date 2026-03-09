@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Nougat Capture",
+  "version": "0.1.0",
+  "description": "Capture tabs and send them to Nougat.",
+  "permissions": ["tabs", "storage", "alarms", "activeTab"],
+  "host_permissions": ["https://*/*", "http://*/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Nougat",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "commands": {
+    "capture-current-tab": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Capture current tab"
+    },
+    "capture-window-tabs": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U",
+        "mac": "Command+Shift+U"
+      },
+      "description": "Capture all tabs in current window"
+    }
+  }
+}

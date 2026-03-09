@@ -1,0 +1,14 @@
+node_modules
+.convex
+coverage
+.DS_Store
+nougat
+.env.local
+.next
+output
+.playwright-cli
+dist
+dist-ssr
+.tanstack
+.vinxi
+*.tsbuildinfo

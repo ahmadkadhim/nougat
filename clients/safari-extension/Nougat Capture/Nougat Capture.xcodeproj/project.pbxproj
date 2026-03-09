@@ -1,0 +1,999 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DAD3296A2F5F292C0001F619 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD329692F5F292C0001F619 /* AppDelegate.swift */; };
+		DAD3296C2F5F292C0001F619 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD3296B2F5F292C0001F619 /* SceneDelegate.swift */; };
+		DAD3296F2F5F292C0001F619 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAD3296D2F5F292C0001F619 /* LaunchScreen.storyboard */; };
+		DAD329722F5F292C0001F619 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAD329702F5F292C0001F619 /* Main.storyboard */; };
+		DAD3297B2F5F292C0001F619 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD3297A2F5F292C0001F619 /* AppDelegate.swift */; };
+		DAD3297E2F5F292C0001F619 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAD3297C2F5F292C0001F619 /* Main.storyboard */; };
+		DAD329852F5F292C0001F619 /* Nougat Capture Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DAD329842F5F292C0001F619 /* Nougat Capture Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DAD3298F2F5F292C0001F619 /* Nougat Capture Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DAD3298E2F5F292C0001F619 /* Nougat Capture Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DAD329942F5F292C0001F619 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = DAD329592F5F292A0001F619 /* Main.html */; };
+		DAD329952F5F292C0001F619 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = DAD329592F5F292A0001F619 /* Main.html */; };
+		DAD329962F5F292C0001F619 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DAD3295B2F5F292A0001F619 /* Icon.png */; };
+		DAD329972F5F292C0001F619 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DAD3295B2F5F292A0001F619 /* Icon.png */; };
+		DAD329982F5F292C0001F619 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = DAD3295C2F5F292A0001F619 /* Style.css */; };
+		DAD329992F5F292C0001F619 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = DAD3295C2F5F292A0001F619 /* Style.css */; };
+		DAD3299A2F5F292C0001F619 /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = DAD3295D2F5F292A0001F619 /* Script.js */; };
+		DAD3299B2F5F292C0001F619 /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = DAD3295D2F5F292A0001F619 /* Script.js */; };
+		DAD3299C2F5F292C0001F619 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD3295E2F5F292A0001F619 /* ViewController.swift */; };
+		DAD3299D2F5F292C0001F619 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD3295E2F5F292A0001F619 /* ViewController.swift */; };
+		DAD3299E2F5F292C0001F619 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAD3295F2F5F292C0001F619 /* Assets.xcassets */; };
+		DAD3299F2F5F292C0001F619 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAD3295F2F5F292C0001F619 /* Assets.xcassets */; };
+		DAD329A02F5F292C0001F619 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD329612F5F292C0001F619 /* SafariWebExtensionHandler.swift */; };
+		DAD329A12F5F292C0001F619 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD329612F5F292C0001F619 /* SafariWebExtensionHandler.swift */; };
+		DAD329BA2F5F292D0001F619 /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = DAD329B32F5F292D0001F619 /* popup.js */; };
+		DAD329BB2F5F292D0001F619 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = DAD329B42F5F292D0001F619 /* background.js */; };
+		DAD329BC2F5F292D0001F619 /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = DAD329B52F5F292D0001F619 /* popup.html */; };
+		DAD329BD2F5F292D0001F619 /* options.js in Resources */ = {isa = PBXBuildFile; fileRef = DAD329B62F5F292D0001F619 /* options.js */; };
+		DAD329BE2F5F292D0001F619 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DAD329B72F5F292D0001F619 /* README.md */; };
+		DAD329BF2F5F292D0001F619 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = DAD329B82F5F292D0001F619 /* manifest.json */; };
+		DAD329C02F5F292D0001F619 /* options.html in Resources */ = {isa = PBXBuildFile; fileRef = DAD329B92F5F292D0001F619 /* options.html */; };
+		DAD329C12F5F292D0001F619 /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = DAD329B32F5F292D0001F619 /* popup.js */; };
+		DAD329C22F5F292D0001F619 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = DAD329B42F5F292D0001F619 /* background.js */; };
+		DAD329C32F5F292D0001F619 /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = DAD329B52F5F292D0001F619 /* popup.html */; };
+		DAD329C42F5F292D0001F619 /* options.js in Resources */ = {isa = PBXBuildFile; fileRef = DAD329B62F5F292D0001F619 /* options.js */; };
+		DAD329C52F5F292D0001F619 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DAD329B72F5F292D0001F619 /* README.md */; };
+		DAD329C62F5F292D0001F619 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = DAD329B82F5F292D0001F619 /* manifest.json */; };
+		DAD329C72F5F292D0001F619 /* options.html in Resources */ = {isa = PBXBuildFile; fileRef = DAD329B92F5F292D0001F619 /* options.html */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DAD329862F5F292C0001F619 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAD329532F5F292A0001F619 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DAD329832F5F292C0001F619;
+			remoteInfo = "Nougat Capture Extension (iOS)";
+		};
+		DAD329902F5F292C0001F619 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAD329532F5F292A0001F619 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DAD3298D2F5F292C0001F619;
+			remoteInfo = "Nougat Capture Extension (macOS)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DAD329A72F5F292C0001F619 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				DAD329852F5F292C0001F619 /* Nougat Capture Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAD329AE2F5F292C0001F619 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				DAD3298F2F5F292C0001F619 /* Nougat Capture Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		DAD3295A2F5F292A0001F619 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
+		DAD3295B2F5F292A0001F619 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		DAD3295C2F5F292A0001F619 /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		DAD3295D2F5F292A0001F619 /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
+		DAD3295E2F5F292A0001F619 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DAD3295F2F5F292C0001F619 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DAD329612F5F292C0001F619 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		DAD329662F5F292C0001F619 /* Nougat Capture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nougat Capture.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAD329692F5F292C0001F619 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DAD3296B2F5F292C0001F619 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		DAD3296E2F5F292C0001F619 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DAD329712F5F292C0001F619 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DAD329732F5F292C0001F619 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAD329782F5F292C0001F619 /* Nougat Capture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nougat Capture.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAD3297A2F5F292C0001F619 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DAD3297D2F5F292C0001F619 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DAD3297F2F5F292C0001F619 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAD329842F5F292C0001F619 /* Nougat Capture Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Nougat Capture Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAD329892F5F292C0001F619 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAD3298E2F5F292C0001F619 /* Nougat Capture Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Nougat Capture Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAD329932F5F292C0001F619 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAD329B32F5F292D0001F619 /* popup.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = popup.js; path = Resources/popup.js; sourceTree = "<group>"; };
+		DAD329B42F5F292D0001F619 /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = background.js; path = Resources/background.js; sourceTree = "<group>"; };
+		DAD329B52F5F292D0001F619 /* popup.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = popup.html; path = Resources/popup.html; sourceTree = "<group>"; };
+		DAD329B62F5F292D0001F619 /* options.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = options.js; path = Resources/options.js; sourceTree = "<group>"; };
+		DAD329B72F5F292D0001F619 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Resources/README.md; sourceTree = "<group>"; };
+		DAD329B82F5F292D0001F619 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = Resources/manifest.json; sourceTree = "<group>"; };
+		DAD329B92F5F292D0001F619 /* options.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = options.html; path = Resources/options.html; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DAD329632F5F292C0001F619 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAD329752F5F292C0001F619 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAD329812F5F292C0001F619 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAD3298B2F5F292C0001F619 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DAD329522F5F292A0001F619 = {
+			isa = PBXGroup;
+			children = (
+				DAD329572F5F292A0001F619 /* Shared (App) */,
+				DAD329602F5F292C0001F619 /* Shared (Extension) */,
+				DAD329682F5F292C0001F619 /* iOS (App) */,
+				DAD329792F5F292C0001F619 /* macOS (App) */,
+				DAD329882F5F292C0001F619 /* iOS (Extension) */,
+				DAD329922F5F292C0001F619 /* macOS (Extension) */,
+				DAD329672F5F292C0001F619 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DAD329572F5F292A0001F619 /* Shared (App) */ = {
+			isa = PBXGroup;
+			children = (
+				DAD3295E2F5F292A0001F619 /* ViewController.swift */,
+				DAD3295F2F5F292C0001F619 /* Assets.xcassets */,
+				DAD329582F5F292A0001F619 /* Resources */,
+			);
+			path = "Shared (App)";
+			sourceTree = "<group>";
+		};
+		DAD329582F5F292A0001F619 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DAD329592F5F292A0001F619 /* Main.html */,
+				DAD3295B2F5F292A0001F619 /* Icon.png */,
+				DAD3295C2F5F292A0001F619 /* Style.css */,
+				DAD3295D2F5F292A0001F619 /* Script.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		DAD329602F5F292C0001F619 /* Shared (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				DAD329B22F5F292D0001F619 /* Resources */,
+				DAD329612F5F292C0001F619 /* SafariWebExtensionHandler.swift */,
+			);
+			path = "Shared (Extension)";
+			sourceTree = "<group>";
+		};
+		DAD329672F5F292C0001F619 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DAD329662F5F292C0001F619 /* Nougat Capture.app */,
+				DAD329782F5F292C0001F619 /* Nougat Capture.app */,
+				DAD329842F5F292C0001F619 /* Nougat Capture Extension.appex */,
+				DAD3298E2F5F292C0001F619 /* Nougat Capture Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DAD329682F5F292C0001F619 /* iOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				DAD329692F5F292C0001F619 /* AppDelegate.swift */,
+				DAD3296B2F5F292C0001F619 /* SceneDelegate.swift */,
+				DAD3296D2F5F292C0001F619 /* LaunchScreen.storyboard */,
+				DAD329702F5F292C0001F619 /* Main.storyboard */,
+				DAD329732F5F292C0001F619 /* Info.plist */,
+			);
+			path = "iOS (App)";
+			sourceTree = "<group>";
+		};
+		DAD329792F5F292C0001F619 /* macOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				DAD3297A2F5F292C0001F619 /* AppDelegate.swift */,
+				DAD3297C2F5F292C0001F619 /* Main.storyboard */,
+				DAD3297F2F5F292C0001F619 /* Info.plist */,
+			);
+			path = "macOS (App)";
+			sourceTree = "<group>";
+		};
+		DAD329882F5F292C0001F619 /* iOS (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				DAD329892F5F292C0001F619 /* Info.plist */,
+			);
+			path = "iOS (Extension)";
+			sourceTree = "<group>";
+		};
+		DAD329922F5F292C0001F619 /* macOS (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				DAD329932F5F292C0001F619 /* Info.plist */,
+			);
+			path = "macOS (Extension)";
+			sourceTree = "<group>";
+		};
+		DAD329B22F5F292D0001F619 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DAD329B32F5F292D0001F619 /* popup.js */,
+				DAD329B42F5F292D0001F619 /* background.js */,
+				DAD329B52F5F292D0001F619 /* popup.html */,
+				DAD329B62F5F292D0001F619 /* options.js */,
+				DAD329B72F5F292D0001F619 /* README.md */,
+				DAD329B82F5F292D0001F619 /* manifest.json */,
+				DAD329B92F5F292D0001F619 /* options.html */,
+			);
+			name = Resources;
+			path = "Shared (Extension)";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DAD329652F5F292C0001F619 /* Nougat Capture (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAD329A82F5F292C0001F619 /* Build configuration list for PBXNativeTarget "Nougat Capture (iOS)" */;
+			buildPhases = (
+				DAD329622F5F292C0001F619 /* Sources */,
+				DAD329632F5F292C0001F619 /* Frameworks */,
+				DAD329642F5F292C0001F619 /* Resources */,
+				DAD329A72F5F292C0001F619 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DAD329872F5F292C0001F619 /* PBXTargetDependency */,
+			);
+			name = "Nougat Capture (iOS)";
+			packageProductDependencies = (
+			);
+			productName = "Nougat Capture (iOS)";
+			productReference = DAD329662F5F292C0001F619 /* Nougat Capture.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DAD329772F5F292C0001F619 /* Nougat Capture (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAD329AF2F5F292C0001F619 /* Build configuration list for PBXNativeTarget "Nougat Capture (macOS)" */;
+			buildPhases = (
+				DAD329742F5F292C0001F619 /* Sources */,
+				DAD329752F5F292C0001F619 /* Frameworks */,
+				DAD329762F5F292C0001F619 /* Resources */,
+				DAD329AE2F5F292C0001F619 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DAD329912F5F292C0001F619 /* PBXTargetDependency */,
+			);
+			name = "Nougat Capture (macOS)";
+			packageProductDependencies = (
+			);
+			productName = "Nougat Capture (macOS)";
+			productReference = DAD329782F5F292C0001F619 /* Nougat Capture.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DAD329832F5F292C0001F619 /* Nougat Capture Extension (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAD329A42F5F292C0001F619 /* Build configuration list for PBXNativeTarget "Nougat Capture Extension (iOS)" */;
+			buildPhases = (
+				DAD329802F5F292C0001F619 /* Sources */,
+				DAD329812F5F292C0001F619 /* Frameworks */,
+				DAD329822F5F292C0001F619 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Nougat Capture Extension (iOS)";
+			packageProductDependencies = (
+			);
+			productName = "Nougat Capture Extension (iOS)";
+			productReference = DAD329842F5F292C0001F619 /* Nougat Capture Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		DAD3298D2F5F292C0001F619 /* Nougat Capture Extension (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAD329AB2F5F292C0001F619 /* Build configuration list for PBXNativeTarget "Nougat Capture Extension (macOS)" */;
+			buildPhases = (
+				DAD3298A2F5F292C0001F619 /* Sources */,
+				DAD3298B2F5F292C0001F619 /* Frameworks */,
+				DAD3298C2F5F292C0001F619 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Nougat Capture Extension (macOS)";
+			packageProductDependencies = (
+			);
+			productName = "Nougat Capture Extension (macOS)";
+			productReference = DAD3298E2F5F292C0001F619 /* Nougat Capture Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DAD329532F5F292A0001F619 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2630;
+				LastUpgradeCheck = 2630;
+				TargetAttributes = {
+					DAD329652F5F292C0001F619 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					DAD329772F5F292C0001F619 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					DAD329832F5F292C0001F619 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					DAD3298D2F5F292C0001F619 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+				};
+			};
+			buildConfigurationList = DAD329562F5F292A0001F619 /* Build configuration list for PBXProject "Nougat Capture" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DAD329522F5F292A0001F619;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = DAD329672F5F292C0001F619 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DAD329652F5F292C0001F619 /* Nougat Capture (iOS) */,
+				DAD329772F5F292C0001F619 /* Nougat Capture (macOS) */,
+				DAD329832F5F292C0001F619 /* Nougat Capture Extension (iOS) */,
+				DAD3298D2F5F292C0001F619 /* Nougat Capture Extension (macOS) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DAD329642F5F292C0001F619 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAD329962F5F292C0001F619 /* Icon.png in Resources */,
+				DAD3296F2F5F292C0001F619 /* LaunchScreen.storyboard in Resources */,
+				DAD329942F5F292C0001F619 /* Main.html in Resources */,
+				DAD3299A2F5F292C0001F619 /* Script.js in Resources */,
+				DAD3299E2F5F292C0001F619 /* Assets.xcassets in Resources */,
+				DAD329722F5F292C0001F619 /* Main.storyboard in Resources */,
+				DAD329982F5F292C0001F619 /* Style.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAD329762F5F292C0001F619 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAD329972F5F292C0001F619 /* Icon.png in Resources */,
+				DAD329992F5F292C0001F619 /* Style.css in Resources */,
+				DAD3297E2F5F292C0001F619 /* Main.storyboard in Resources */,
+				DAD3299B2F5F292C0001F619 /* Script.js in Resources */,
+				DAD3299F2F5F292C0001F619 /* Assets.xcassets in Resources */,
+				DAD329952F5F292C0001F619 /* Main.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAD329822F5F292C0001F619 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAD329C72F5F292D0001F619 /* options.html in Resources */,
+				DAD329C22F5F292D0001F619 /* background.js in Resources */,
+				DAD329C42F5F292D0001F619 /* options.js in Resources */,
+				DAD329C52F5F292D0001F619 /* README.md in Resources */,
+				DAD329C32F5F292D0001F619 /* popup.html in Resources */,
+				DAD329C62F5F292D0001F619 /* manifest.json in Resources */,
+				DAD329C12F5F292D0001F619 /* popup.js in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAD3298C2F5F292C0001F619 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAD329C02F5F292D0001F619 /* options.html in Resources */,
+				DAD329BB2F5F292D0001F619 /* background.js in Resources */,
+				DAD329BD2F5F292D0001F619 /* options.js in Resources */,
+				DAD329BE2F5F292D0001F619 /* README.md in Resources */,
+				DAD329BC2F5F292D0001F619 /* popup.html in Resources */,
+				DAD329BF2F5F292D0001F619 /* manifest.json in Resources */,
+				DAD329BA2F5F292D0001F619 /* popup.js in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DAD329622F5F292C0001F619 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAD3299C2F5F292C0001F619 /* ViewController.swift in Sources */,
+				DAD3296A2F5F292C0001F619 /* AppDelegate.swift in Sources */,
+				DAD3296C2F5F292C0001F619 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAD329742F5F292C0001F619 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAD3299D2F5F292C0001F619 /* ViewController.swift in Sources */,
+				DAD3297B2F5F292C0001F619 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAD329802F5F292C0001F619 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAD329A02F5F292C0001F619 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAD3298A2F5F292C0001F619 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAD329A12F5F292C0001F619 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DAD329872F5F292C0001F619 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DAD329832F5F292C0001F619 /* Nougat Capture Extension (iOS) */;
+			targetProxy = DAD329862F5F292C0001F619 /* PBXContainerItemProxy */;
+		};
+		DAD329912F5F292C0001F619 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DAD3298D2F5F292C0001F619 /* Nougat Capture Extension (macOS) */;
+			targetProxy = DAD329902F5F292C0001F619 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DAD329592F5F292A0001F619 /* Main.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DAD3295A2F5F292A0001F619 /* Base */,
+			);
+			name = Main.html;
+			sourceTree = "<group>";
+		};
+		DAD3296D2F5F292C0001F619 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DAD3296E2F5F292C0001F619 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		DAD329702F5F292C0001F619 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DAD329712F5F292C0001F619 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DAD3297C2F5F292C0001F619 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DAD3297D2F5F292C0001F619 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DAD329A22F5F292C0001F619 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DAD329A32F5F292C0001F619 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		DAD329A52F5F292C0001F619 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Nougat Capture Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Nougat-Capture.Extension";
+				PRODUCT_NAME = "Nougat Capture Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DAD329A62F5F292C0001F619 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Nougat Capture Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Nougat-Capture.Extension";
+				PRODUCT_NAME = "Nougat Capture Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DAD329A92F5F292C0001F619 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Nougat Capture";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Nougat-Capture";
+				PRODUCT_NAME = "Nougat Capture";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DAD329AA2F5F292C0001F619 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Nougat Capture";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Nougat-Capture";
+				PRODUCT_NAME = "Nougat Capture";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DAD329AC2F5F292C0001F619 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Nougat Capture Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Nougat-Capture.Extension";
+				PRODUCT_NAME = "Nougat Capture Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		DAD329AD2F5F292C0001F619 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Nougat Capture Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Nougat-Capture.Extension";
+				PRODUCT_NAME = "Nougat Capture Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		DAD329B02F5F292C0001F619 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Nougat Capture";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Nougat-Capture";
+				PRODUCT_NAME = "Nougat Capture";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		DAD329B12F5F292C0001F619 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Nougat Capture";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Nougat-Capture";
+				PRODUCT_NAME = "Nougat Capture";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DAD329562F5F292A0001F619 /* Build configuration list for PBXProject "Nougat Capture" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAD329A22F5F292C0001F619 /* Debug */,
+				DAD329A32F5F292C0001F619 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DAD329A42F5F292C0001F619 /* Build configuration list for PBXNativeTarget "Nougat Capture Extension (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAD329A52F5F292C0001F619 /* Debug */,
+				DAD329A62F5F292C0001F619 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DAD329A82F5F292C0001F619 /* Build configuration list for PBXNativeTarget "Nougat Capture (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAD329A92F5F292C0001F619 /* Debug */,
+				DAD329AA2F5F292C0001F619 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DAD329AB2F5F292C0001F619 /* Build configuration list for PBXNativeTarget "Nougat Capture Extension (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAD329AC2F5F292C0001F619 /* Debug */,
+				DAD329AD2F5F292C0001F619 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DAD329AF2F5F292C0001F619 /* Build configuration list for PBXNativeTarget "Nougat Capture (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAD329B02F5F292C0001F619 /* Debug */,
+				DAD329B12F5F292C0001F619 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DAD329532F5F292A0001F619 /* Project object */;
+}
