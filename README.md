@@ -51,11 +51,10 @@ Knowledge capture system for browser tabs + iOS share sheet, with async enrichme
    - `VITE_APP_ORIGIN` (frontend origin for the TanStack Start client)
    - `VITE_CONVEX_URL` (same Convex URL exposed to the browser client)
    - `BETTER_AUTH_SECRET` (required for Better Auth)
-   - `X_BEARER_TOKEN` (optional but recommended for X enrichment)
-   - `X_BOOKMARKS_ACCESS_TOKEN` (optional fallback only; a stored OAuth user token is preferred for scheduled X bookmark sync)
-   - `X_BOOKMARKS_USER_ID` (optional; only needed if you do not want the sync to call `users/me`)
-   - `X_OAUTH_CLIENT_ID` (required for X OAuth connect flow)
-   - `X_OAUTH_CLIENT_SECRET` (required for confidential web-app OAuth token exchange)
+   - `X_BEARER_TOKEN` (optional; enables richer enrichment for X URLs. Without it, X captures are stored with minimal metadata.)
+   - `X_OAUTH_CLIENT_ID` (required only if this deployment should let users connect their own X account for bookmark sync)
+   - `X_OAUTH_CLIENT_SECRET` (required only if this deployment should let users connect their own X account for bookmark sync)
+   - `X_BOOKMARKS_USER_ID` (optional override for bookmark sync; otherwise Nougat resolves the X user via the connected account)
    - `OPERATOR_API_KEY` (recommended)
 
 ```bash
@@ -86,10 +85,16 @@ For local development:
 - the frontend reads `VITE_APP_ORIGIN` and `VITE_CONVEX_URL` from `.env.local`
 
 ## X connect flow
-1. Set `X_OAUTH_CLIENT_ID`, `X_OAUTH_CLIENT_SECRET`, and `BETTER_AUTH_SECRET`.
-2. Register the callback URL `https://<deployment>.convex.site/v1/operator/x/oauth/callback` in the X app settings.
-3. Register your frontend origin in Better Auth via `APP_ORIGIN` and `VITE_APP_ORIGIN`.
-4. Open the dashboard and use `Connect X` for the user-owned connection flow, or call the operator OAuth route directly if needed.
+If you are self-hosting Nougat and want X features, you need your own X developer app and OAuth 2.0 client credentials. Those secrets are not shared by this repo.
+
+- End users of your hosted deployment do **not** need their own X app secrets. They only need an X account to connect.
+- Self-hosters only need X credentials if they want X enrichment or X bookmark sync. The rest of Nougat can run without them.
+
+1. For richer X URL enrichment, optionally set `X_BEARER_TOKEN`.
+2. For user-owned X bookmark sync, set `X_OAUTH_CLIENT_ID`, `X_OAUTH_CLIENT_SECRET`, and `BETTER_AUTH_SECRET`.
+3. Register the callback URL `https://<deployment>.convex.site/v1/operator/x/oauth/callback` in the X app settings.
+4. Register your frontend origin in Better Auth via `APP_ORIGIN` and `VITE_APP_ORIGIN`.
+5. Open the dashboard and use `Connect X` for the user-owned connection flow, or call the operator OAuth route directly if needed.
 
 ## Register a device token
 Use extension options `Register Device` button, or call API directly:
