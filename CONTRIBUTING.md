@@ -3,7 +3,7 @@
 ## Current posture
 Nougat is still early-stage. Contributions are welcome, but the maintainer may prioritize architecture consistency and product direction over broad compatibility.
 
-Until a license is added, contribution review can still happen, but reuse and redistribution terms are not finalized yet.
+The project is MIT licensed. See `LICENSE` for the code license and `TRADEMARKS.md` for the project name and branding policy.
 
 ## Before you start
 - Read the `README.md` first.
