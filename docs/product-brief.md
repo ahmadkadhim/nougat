@@ -1,17 +1,18 @@
 # Nougat Product Brief
 
 ## Purpose
-Nougat is a personal knowledge inbox for high-volume AI and tech discovery. The core job is to capture URLs and snippets from browser tabs and iOS share targets, import high-signal sources that already exist inside other platforms, enrich the source content, and turn each item into markdown with complete provenance so it can feed an agentic knowledge system.
+Nougat is an open, self-hostable capture inbox for high-volume AI and tech discovery. The core job is to capture URLs and snippets from browser tabs and iOS share targets, import high-signal sources that already exist inside other platforms, enrich the source content, and turn each item into markdown with complete provenance so it can feed downstream agent and note workflows.
 
 The target workflow is:
 - capture one tab, many tabs, or any iOS share target quickly
 - import saved discoveries from systems that already act as an inbox, especially X bookmarks
 - normalize and enrich the source in the background
 - persist a markdown artifact plus structured metadata
+- process the inbox into reusable bits: notes, tasks, resources, and skills
 - make the resulting corpus easy for agents to search, synthesize, connect, and turn into action later
 
 ## Problem Statement
-The current pain point is tab overload across Chrome, Safari, and iOS apps such as Safari, X, YouTube, LinkedIn, and Substack. Useful content gets fragmented across devices and apps, while later knowledge processing depends on capturing enough metadata and content to make the item usable by downstream agents.
+The current pain point is tab overload across Chrome, Safari, and iOS apps such as Safari, X, YouTube, LinkedIn, and Substack. Useful content gets fragmented across devices and apps, while later note extraction and agent workflows depend on capturing enough metadata and content to make the item usable downstream.
 
 X is not just another capture source. It is one of the highest-value discovery channels in the existing workflow because many of the best tips, tools, and AI references are found there first and saved as bookmarks for later processing.
 
@@ -28,7 +29,7 @@ The intended X workflow is:
 - enrich the post itself plus any linked article or tool page
 - render the final item into markdown with provenance showing it originated from an X bookmark import
 
-This workflow is important because it turns an existing personal habit into a reliable ingestion channel instead of asking for new capture behavior.
+This workflow is important because it turns an existing research habit into a reliable ingestion channel instead of asking for new capture behavior.
 
 ## Product Scope for v1
 Included in v1:
@@ -36,9 +37,10 @@ Included in v1:
 - Chrome extension for current tab, selected tabs, and full-window capture
 - Safari support via the same WebExtension source and Safari conversion flow
 - iOS share-sheet shortcut flow
-- scheduled X bookmark import via the X API, running twice daily
+- scheduled X bookmark import via the X API, running hourly
 - async enrichment for X, YouTube, and generic web pages
 - markdown-first storage with full provenance metadata
+- review flows for turning captures into bits: notes, tasks, resources, and skills
 - operator views or endpoints for failed items, dedupe conflicts, pending markdown export, and reprocessing
 - daily and weekly digest generation
 
@@ -61,7 +63,7 @@ Explicitly deferred to v2:
 
 ## Success Criteria
 - Captures can be sent reliably from Chrome, Safari, and iOS
-- New X bookmarks are imported automatically on the twice-daily schedule without missing or duplicating items
+- New X bookmarks are imported automatically on the hourly schedule without missing or duplicating items
 - Bulk tab capture is fast enough that it feels instant to use
 - Every accepted capture produces a durable record with complete frontmatter
 - Duplicate captures are suppressed within the configured idempotency window

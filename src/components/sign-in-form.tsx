@@ -1,6 +1,8 @@
 import { startTransition, useState } from "react";
 import { useNavigate, useRouter } from "@tanstack/react-router";
 import { authClient } from "../lib/auth-client";
+import { invalidateAuthSnapshotCache } from "../lib/auth-session";
+import nougatUiIcon from "../assets/nougat-ui-icon.png";
 
 type Mode = "sign-in" | "sign-up";
 
@@ -44,8 +46,10 @@ export function SignInForm({ redirectTo }: { redirectTo?: string }) {
           }
         }
 
+        invalidateAuthSnapshotCache();
+
         if (redirectTo) {
-          router.history.push(redirectTo);
+          await router.navigate({ href: redirectTo, replace: true });
           return;
         }
 
@@ -62,10 +66,16 @@ export function SignInForm({ redirectTo }: { redirectTo?: string }) {
     <div className="auth-shell">
       <div className="auth-card">
         <div className="auth-copy">
-          <p className="eyebrow">Nougat</p>
-          <h1>Personal knowledge capture with real ownership.</h1>
+          <div className="auth-brand">
+            <img alt="Nougat icon" className="auth-brand-icon" src={nougatUiIcon} />
+            <div>
+              <p className="eyebrow">Nougat</p>
+              <p className="auth-brand-label">{mode === "sign-in" ? "Log in" : "Sign up"}</p>
+            </div>
+          </div>
+          <h1>Capture inbox with real ownership.</h1>
           <p className="lede">
-            Sign in to manage X sync, inspect capture health, and grow this into the real product shell instead of a local-only operator tool.
+            Sign in to manage X sync, inspect capture health, and use Nougat as an open, self-hostable capture workflow.
           </p>
         </div>
 

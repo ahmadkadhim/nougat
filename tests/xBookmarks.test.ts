@@ -1,6 +1,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildXStatusUrl, collectNewBookmarks, getBookmarkCaptureTimestamp, summarizeBookmarkText } from "../convex/lib/xBookmarks.ts";
+import {
+  BOOKMARK_PAGE_SIZE,
+  buildXStatusUrl,
+  collectNewBookmarks,
+  getBookmarkCaptureTimestamp,
+  resolveBookmarkPageRequestLimit,
+  summarizeBookmarkText
+} from "../convex/lib/xBookmarks.ts";
 
 test("buildXStatusUrl prefers username path when author is known", () => {
   const url = buildXStatusUrl(
@@ -46,4 +53,15 @@ test("summarizeBookmarkText normalizes whitespace and truncates long text", () =
 test("getBookmarkCaptureTimestamp keeps newer bookmarks ahead within a sync", () => {
   assert.equal(getBookmarkCaptureTimestamp(5_000, 0), 5_000);
   assert.equal(getBookmarkCaptureTimestamp(5_000, 4), 4_996);
+});
+
+test("bookmark sync uses a fixed small page size", () => {
+  assert.equal(BOOKMARK_PAGE_SIZE, 10);
+});
+
+test("resolveBookmarkPageRequestLimit preserves the old scan budget for smaller pages", () => {
+  assert.equal(resolveBookmarkPageRequestLimit(100), 8);
+  assert.equal(resolveBookmarkPageRequestLimit(50), 16);
+  assert.equal(resolveBookmarkPageRequestLimit(25), 32);
+  assert.equal(resolveBookmarkPageRequestLimit(1), 100);
 });

@@ -14,6 +14,7 @@ import { Route as SkillsRouteImport } from './routes/skills'
 import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as ReviewRouteImport } from './routes/review'
 import { Route as ResourcesRouteImport } from './routes/resources'
+import { Route as NotesRouteImport } from './routes/notes'
 import { Route as KnowledgeRouteImport } from './routes/knowledge'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
@@ -44,6 +45,11 @@ const ResourcesRoute = ResourcesRouteImport.update({
   path: '/resources',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NotesRoute = NotesRouteImport.update({
+  id: '/notes',
+  path: '/notes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const KnowledgeRoute = KnowledgeRouteImport.update({
   id: '/knowledge',
   path: '/knowledge',
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/knowledge': typeof KnowledgeRoute
+  '/notes': typeof NotesRoute
   '/resources': typeof ResourcesRoute
   '/review': typeof ReviewRoute
   '/sign-in': typeof SignInRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/knowledge': typeof KnowledgeRoute
+  '/notes': typeof NotesRoute
   '/resources': typeof ResourcesRoute
   '/review': typeof ReviewRoute
   '/sign-in': typeof SignInRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/knowledge': typeof KnowledgeRoute
+  '/notes': typeof NotesRoute
   '/resources': typeof ResourcesRoute
   '/review': typeof ReviewRoute
   '/sign-in': typeof SignInRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/knowledge'
+    | '/notes'
     | '/resources'
     | '/review'
     | '/sign-in'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/knowledge'
+    | '/notes'
     | '/resources'
     | '/review'
     | '/sign-in'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/knowledge'
+    | '/notes'
     | '/resources'
     | '/review'
     | '/sign-in'
@@ -139,6 +151,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
   KnowledgeRoute: typeof KnowledgeRoute
+  NotesRoute: typeof NotesRoute
   ResourcesRoute: typeof ResourcesRoute
   ReviewRoute: typeof ReviewRoute
   SignInRoute: typeof SignInRoute
@@ -184,6 +197,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResourcesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/notes': {
+      id: '/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof NotesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/knowledge': {
       id: '/knowledge'
       path: '/knowledge'
@@ -219,6 +239,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
   KnowledgeRoute: KnowledgeRoute,
+  NotesRoute: NotesRoute,
   ResourcesRoute: ResourcesRoute,
   ReviewRoute: ReviewRoute,
   SignInRoute: SignInRoute,

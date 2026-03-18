@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { ExternalLinkIcon } from "./external-link-icon";
 
 export type DashboardLinkPreview = {
   author: string | null;
@@ -68,73 +69,102 @@ export function formatPostTimestamp(timestamp?: number | null) {
 export function CaptureRow({ capture }: { capture: DashboardCapture }) {
   return (
     <li className={capture.xPost ? "capture-row capture-row-x" : "capture-row"}>
-      {capture.xPost ? (
-        <article className="x-post-card">
-          <div className="x-avatar">
-            {capture.xPost.avatarUrl ? (
-              <img alt={capture.xPost.author ?? capture.author ?? "X author"} src={capture.xPost.avatarUrl} />
-            ) : (
-              <span>{getAvatarFallback(capture.xPost.author ?? capture.author ?? capture.title)}</span>
-            )}
-          </div>
+      <CaptureCardBody capture={capture} />
+    </li>
+  );
+}
 
-          <div className="x-post-content">
-            <div className="x-post-header">
-              <div className="x-post-identity">
-                <span className="x-post-author">{capture.xPost.author ?? capture.author ?? "Unknown"}</span>
-                {capture.xPost.verified ? <span aria-label="Verified account" className="x-post-verified" title="Verified account" /> : null}
-                {capture.xPost.username ? <span className="x-post-username">@{capture.xPost.username}</span> : null}
-                {capture.postedAt ? (
-                  <>
-                    <span className="x-post-separator">·</span>
-                    <time dateTime={new Date(capture.postedAt).toISOString()}>{formatPostTimestamp(capture.postedAt)}</time>
-                  </>
-                ) : null}
-              </div>
+export function CaptureCardBody({
+  capture,
+  showFooter = true,
+  showOpenLink = true
+}: {
+  capture: DashboardCapture;
+  showFooter?: boolean;
+  showOpenLink?: boolean;
+}) {
+  if (capture.xPost) {
+    return (
+      <article className="x-post-card">
+        <div className="x-avatar">
+          {capture.xPost.avatarUrl ? (
+            <img alt={capture.xPost.author ?? capture.author ?? "X author"} src={capture.xPost.avatarUrl} />
+          ) : (
+            <span>{getAvatarFallback(capture.xPost.author ?? capture.author ?? capture.title)}</span>
+          )}
+        </div>
 
+        <div className="x-post-content">
+          <div className="x-post-header">
+            <div className="x-post-identity">
+              <span className="x-post-author">{capture.xPost.author ?? capture.author ?? "Unknown"}</span>
+              {capture.xPost.verified ? <span aria-label="Verified account" className="x-post-verified" title="Verified account" /> : null}
+              {capture.xPost.username ? <span className="x-post-username">@{capture.xPost.username}</span> : null}
+              {capture.postedAt ? (
+                <>
+                  <span className="x-post-separator">·</span>
+                  <time dateTime={new Date(capture.postedAt).toISOString()}>{formatPostTimestamp(capture.postedAt)}</time>
+                </>
+              ) : null}
+            </div>
+
+            {showOpenLink ? (
               <a className="x-post-open" href={capture.canonicalUrl} rel="noreferrer" target="_blank">
                 Open
               </a>
-            </div>
+            ) : null}
+          </div>
 
-            <div className={capture.xPost.mediaPreviewUrls.length ? "x-post-body has-media" : "x-post-body"}>
-              <div className="x-post-main">
-                {capture.xPost.text ? <ExpandableText className="x-post-text" text={capture.xPost.text} /> : null}
-              </div>
-              {capture.xPost.mediaPreviewUrls.length ? (
-                <aside className="x-post-media-rail">
-                  <MediaCarousel alt={capture.title} href={capture.canonicalUrl} mediaUrls={capture.xPost.mediaPreviewUrls} />
-                </aside>
-              ) : null}
+          <div className={capture.xPost.mediaPreviewUrls.length ? "x-post-body has-media" : "x-post-body"}>
+            <div className="x-post-main">
+              {capture.xPost.text ? <ExpandableText className="x-post-text" text={capture.xPost.text} /> : null}
             </div>
-            {capture.xPost.linkPreview ? <LinkPreviewCard preview={capture.xPost.linkPreview} /> : null}
-            {capture.xPost.quote ? <QuotePreviewCard quote={capture.xPost.quote} /> : null}
+            {capture.xPost.mediaPreviewUrls.length ? (
+              <aside className="x-post-media-rail">
+                <MediaCarousel alt={capture.title} href={capture.canonicalUrl} mediaUrls={capture.xPost.mediaPreviewUrls} />
+              </aside>
+            ) : null}
+          </div>
+          {capture.xPost.linkPreview ? <LinkPreviewCard preview={capture.xPost.linkPreview} /> : null}
+          {capture.xPost.quote ? <QuotePreviewCard quote={capture.xPost.quote} /> : null}
 
+          {showFooter ? (
             <div className="x-post-footer">
               <span>{capture.platform.toUpperCase()}</span>
               <span>Saved {formatTimestamp(capture.sourcedAt)}</span>
               <span>{capture.status}</span>
             </div>
-          </div>
-        </article>
-      ) : (
-        <>
-          <div>
-            <p className="capture-title">{capture.title}</p>
-            <p className="capture-meta">
-              Sourced {formatTimestamp(capture.sourcedAt)} · {capture.author ? `By ${capture.author}` : "Author pending"} ·{" "}
-              {capture.postedAt ? `Posted ${formatTimestamp(capture.postedAt)}` : "Posted time pending"}
-            </p>
-            <p className="capture-submeta">
-              {capture.platform} · {capture.captureMethod} · {capture.status}
-            </p>
-          </div>
-          <a href={capture.canonicalUrl} rel="noreferrer" target="_blank">
-            Open source
-          </a>
-        </>
-      )}
-    </li>
+          ) : null}
+        </div>
+      </article>
+    );
+  }
+
+  return (
+    <>
+      <div>
+        <p className="capture-title">{capture.title}</p>
+        <p className="capture-meta">
+          Sourced {formatTimestamp(capture.sourcedAt)} · {capture.author ? `By ${capture.author}` : "Author pending"} ·{" "}
+          {capture.postedAt ? `Posted ${formatTimestamp(capture.postedAt)}` : "Posted time pending"}
+        </p>
+        <p className="capture-submeta">
+          {capture.platform} · {capture.captureMethod} · {capture.status}
+        </p>
+      </div>
+      {showOpenLink ? (
+        <a
+          aria-label="Open source"
+          className="capture-open-link-inline"
+          href={capture.canonicalUrl}
+          rel="noreferrer"
+          target="_blank"
+          title="Open source"
+        >
+          <ExternalLinkIcon className="button-icon" />
+        </a>
+      ) : null}
+    </>
   );
 }
 

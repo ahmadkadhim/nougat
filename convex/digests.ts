@@ -48,7 +48,7 @@ export const generateDigest: any = internalAction({
     ].join(" ");
 
     const markdown = [
-      `# ${args.period[0].toUpperCase()}${args.period.slice(1)} Knowledge Digest`,
+      `# ${args.period[0].toUpperCase()}${args.period.slice(1)} Notes Digest`,
       "",
       summary,
       "",

@@ -2,9 +2,11 @@ import { v } from "convex/values";
 import { internalAction, internalMutation, internalQuery } from "./_generated/server";
 import { internal } from "./_generated/api";
 import {
+  BOOKMARK_PAGE_SIZE,
   buildXStatusUrl,
   collectNewBookmarks,
   getBookmarkCaptureTimestamp,
+  resolveBookmarkPageRequestLimit,
   summarizeBookmarkText,
   type XBookmarkTweet,
   type XBookmarkUser
@@ -13,8 +15,6 @@ import { normalizeUrl } from "./lib/normalize";
 
 const SYNC_SOURCE_KEY = "default";
 const SYSTEM_DEVICE_ID = "system_x_bookmarks";
-const MAX_PAGES = 8;
-const PAGE_SIZE = 100;
 const internalApi = internal as any;
 
 type BookmarkPage = {
@@ -89,6 +89,8 @@ export const runScheduledSyncForUser = internalAction({
       }
 
       const userId = process.env.X_BOOKMARKS_USER_ID ?? auth.userId ?? (await resolveUserId(accessToken));
+      const pageSize = BOOKMARK_PAGE_SIZE;
+      const maxPages = resolveBookmarkPageRequestLimit(pageSize);
       let nextToken: string | undefined;
       let newestSeenTweetId = state?.lastSeenTweetId;
       let scanned = 0;
@@ -98,10 +100,11 @@ export const runScheduledSyncForUser = internalAction({
       let bookmarkOffset = 0;
       let reachedLastSeen = false;
 
-      while (pageCount < MAX_PAGES && !reachedLastSeen) {
+      while (pageCount < maxPages && !reachedLastSeen) {
         const page = await fetchBookmarksPage({
           accessToken,
           userId,
+          pageSize,
           paginationToken: nextToken
         });
 
@@ -122,7 +125,7 @@ export const runScheduledSyncForUser = internalAction({
           const bookmarkContextResponse = buildBookmarkContextResponse(page, tweet);
           const bookmarkRequest = {
             endpoint: `/2/users/${userId}/bookmarks`,
-            max_results: PAGE_SIZE,
+            max_results: pageSize,
             pagination_token: nextToken ?? null,
             expansions: [
               "article.cover_media",
@@ -280,6 +283,8 @@ export const runScheduledSyncForUser = internalAction({
         scanned,
         imported,
         duplicates,
+        page_size: pageSize,
+        page_request_cap: maxPages,
         newest_seen_tweet_id: newestSeenTweetId ?? null,
         reached_last_seen: reachedLastSeen
       };
@@ -410,10 +415,11 @@ async function resolveUserId(accessToken: string): Promise<string> {
 async function fetchBookmarksPage(input: {
   accessToken: string;
   userId: string;
+  pageSize: number;
   paginationToken?: string;
 }): Promise<BookmarkPage> {
   const endpoint = new URL(`https://api.x.com/2/users/${input.userId}/bookmarks`);
-  endpoint.searchParams.set("max_results", String(PAGE_SIZE));
+  endpoint.searchParams.set("max_results", String(input.pageSize));
   endpoint.searchParams.set(
     "expansions",
     [

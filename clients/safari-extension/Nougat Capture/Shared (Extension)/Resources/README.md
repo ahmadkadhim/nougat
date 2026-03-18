@@ -1,4 +1,4 @@
-# Browser Extension (Chrome + Safari)
+# Chrome Extension (Chrome + Safari)
 
 This is a single WebExtension codebase used for both Chrome and Safari.
 
@@ -6,15 +6,16 @@ This is a single WebExtension codebase used for both Chrome and Safari.
 1. Open `chrome://extensions`.
 2. Enable `Developer mode`.
 3. Click `Load unpacked` and select this folder.
-4. Open extension options and set:
-   - `API Base URL`
-   - `Device Token` (or click `Register Device`)
+4. Open the Nougat web app and sign in.
+5. Open the dashboard in a browser tab.
+6. Open the extension popup and click `Connect To Current Tab`.
+7. Use extension options only as a manual fallback if automatic pairing is unavailable.
 
 ## Safari setup
 Safari can consume the same extension using Apple's converter:
 
 ```bash
-xcrun safari-web-extension-converter /absolute/path/to/clients/browser-extension --project-location /absolute/path/to/clients/safari-extension --copy-resources --force
+xcrun safari-web-extension-converter /absolute/path/to/clients/chrome-extension --project-location /absolute/path/to/clients/safari-extension --copy-resources --force
 ```
 
 Then open the generated Xcode project, build, and enable the extension in Safari.
@@ -28,3 +29,4 @@ Then open the generated Xcode project, build, and enable the extension in Safari
 - Retry queue with periodic background flush.
 - Client-side filtering for non-web tabs and exact duplicate URLs within a batch.
 - Device registration and token rotation from options page.
+- Popup-initiated pairing against the signed-in Nougat dashboard tab.

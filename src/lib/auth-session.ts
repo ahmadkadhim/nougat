@@ -21,6 +21,16 @@ export type AuthSnapshot = {
   user: AuthSessionPayload["user"] | null;
 };
 
+const CLIENT_AUTH_CACHE_TTL_MS = 60_000;
+
+let clientAuthSnapshotCache:
+  | {
+      fetchedAt: number;
+      snapshot: AuthSnapshot;
+    }
+  | null = null;
+let clientAuthSnapshotPromise: Promise<AuthSnapshot> | null = null;
+
 export function createLoggedOutAuthSnapshot(): AuthSnapshot {
   return {
     isAuthenticated: false,
@@ -34,15 +44,44 @@ export async function getAuthSnapshot(pathname?: string): Promise<AuthSnapshot> 
     return createLoggedOutAuthSnapshot();
   }
 
-  const response = await fetchSessionResponse();
-  if (!response?.session || !response.user) {
-    return createLoggedOutAuthSnapshot();
+  if (typeof window !== "undefined") {
+    const cachedSnapshot = getFreshClientAuthSnapshot();
+    if (cachedSnapshot) {
+      return cachedSnapshot;
+    }
+
+    if (!clientAuthSnapshotPromise) {
+      clientAuthSnapshotPromise = fetchSessionResponse()
+        .then((response) => {
+          const snapshot = toAuthSnapshot(response);
+          setClientAuthSnapshot(snapshot);
+          return snapshot;
+        })
+        .finally(() => {
+          clientAuthSnapshotPromise = null;
+        });
+    }
+
+    return clientAuthSnapshotPromise;
   }
 
-  return {
-    isAuthenticated: true,
-    session: response.session,
-    user: response.user
+  const response = await fetchSessionResponse();
+  return toAuthSnapshot(response);
+}
+
+export function invalidateAuthSnapshotCache() {
+  clientAuthSnapshotCache = null;
+  clientAuthSnapshotPromise = null;
+}
+
+export function setClientAuthSnapshot(snapshot: AuthSnapshot) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  clientAuthSnapshotCache = {
+    fetchedAt: Date.now(),
+    snapshot
   };
 }
 
@@ -95,4 +134,29 @@ function getRequiredEnv(name: string): string {
     throw new Error(`Missing required environment variable: ${name}`);
   }
   return value;
+}
+
+function getFreshClientAuthSnapshot(): AuthSnapshot | null {
+  if (!clientAuthSnapshotCache) {
+    return null;
+  }
+
+  if (Date.now() - clientAuthSnapshotCache.fetchedAt > CLIENT_AUTH_CACHE_TTL_MS) {
+    clientAuthSnapshotCache = null;
+    return null;
+  }
+
+  return clientAuthSnapshotCache.snapshot;
+}
+
+function toAuthSnapshot(response: AuthSessionPayload | null): AuthSnapshot {
+  if (!response?.session || !response.user) {
+    return createLoggedOutAuthSnapshot();
+  }
+
+  return {
+    isAuthenticated: true,
+    session: response.session,
+    user: response.user
+  };
 }

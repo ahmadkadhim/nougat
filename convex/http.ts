@@ -97,6 +97,7 @@ http.route({
 
     const result = await ctx.runMutation(api.captures.ingestCapture, {
       deviceId: auth.device.deviceId,
+      ownerAuthUserId: auth.device.ownerAuthUserId,
       request: body,
       rawPayload: body
     });
@@ -141,6 +142,7 @@ http.route({
 
     const result = await ctx.runMutation(api.captures.ingestBulkCaptures, {
       deviceId: auth.device.deviceId,
+      ownerAuthUserId: auth.device.ownerAuthUserId,
       requests
     });
 
@@ -160,6 +162,7 @@ http.route({
 
     const result = await ctx.runQuery(api.captures.getCaptureByCaptureId, { captureId });
     if (!result) return json({ error: "Not found" }, { status: 404 });
+    if (!canAccessCapture(auth.device, result.capture)) return forbidden();
 
     return json({
       capture_id: result.capture.captureId,
@@ -185,6 +188,7 @@ http.route({
 
     const result = await ctx.runQuery(api.captures.getCaptureByCaptureId, { captureId });
     if (!result) return json({ error: "Not found" }, { status: 404 });
+    if (!canAccessCapture(auth.device, result.capture)) return forbidden();
 
     return json({
       capture_id: result.capture.captureId,
@@ -206,6 +210,9 @@ http.route({
 
     const captureId = pathId(request.url, "captures");
     if (!captureId) return badRequest("Missing capture ID");
+    const capture = await ctx.runQuery(api.captures.getCaptureByCaptureId, { captureId });
+    if (!capture) return json({ error: "Not found" }, { status: 404 });
+    if (!canAccessCapture(auth.device, capture.capture)) return forbidden();
 
     const result = await ctx.runMutation(api.captures.requestReprocess, { captureId });
     return json(result, { status: 202 });
@@ -223,6 +230,9 @@ http.route({
     if (!isRecord(body) || typeof body.capture_id !== "string") {
       return badRequest("Missing capture_id");
     }
+    const capture = await ctx.runQuery(api.captures.getCaptureByCaptureId, { captureId: body.capture_id });
+    if (!capture) return json({ error: "Not found" }, { status: 404 });
+    if (!canAccessCapture(auth.device, capture.capture)) return forbidden();
 
     const result = await ctx.runMutation(api.captures.requestReprocess, { captureId: body.capture_id });
     return json(result, { status: 202 });
@@ -343,7 +353,7 @@ http.route({
 });
 
 http.route({
-  path: "/v1/operator/knowledge-markdown/pending",
+  path: "/v1/operator/notes-markdown/pending",
   method: "GET",
   handler: httpAction(async (ctx, request) => {
     if (!isOperatorAuthorized(request)) return forbidden();
@@ -353,13 +363,13 @@ http.route({
     const ownerAuthUserId = url.searchParams.get("owner_user_id");
     if (!ownerAuthUserId) return badRequest("Missing owner_user_id");
 
-    const documents = await ctx.runQuery(api.derived.listPendingKnowledgeMarkdownForOwner, {
+    const documents = await ctx.runQuery(api.derived.listPendingNoteMarkdownForOwner, {
       ownerAuthUserId,
       limit
     });
     return json({
-      documents: documents.map((item) => ({
-        documentId: item.knowledgeItemId,
+      documents: documents.map((item: (typeof documents)[number]) => ({
+        documentId: item.noteId,
         path: item.markdownPath,
         markdown: item.markdown
       }))
@@ -368,16 +378,16 @@ http.route({
 });
 
 http.route({
-  path: "/v1/operator/knowledge-markdown/:knowledgeItemId/exported",
+  path: "/v1/operator/notes-markdown/:noteId/exported",
   method: "POST",
   handler: httpAction(async (ctx, request) => {
     if (!isOperatorAuthorized(request)) return forbidden();
 
-    const knowledgeItemId = pathId(request.url, "knowledge-markdown");
-    if (!knowledgeItemId) return badRequest("Missing knowledge item ID");
+    const noteId = pathId(request.url, "notes-markdown");
+    if (!noteId) return badRequest("Missing note ID");
 
-    const result = await ctx.runMutation(api.derived.markKnowledgeMarkdownExported, {
-      knowledgeItemId
+    const result = await ctx.runMutation(api.derived.markNoteMarkdownExported, {
+      noteId
     });
 
     return json(result, { status: 202 });
@@ -400,7 +410,7 @@ http.route({
       limit
     });
     return json({
-      documents: documents.map((item) => ({
+      documents: documents.map((item: (typeof documents)[number]) => ({
         documentId: item.resourceId,
         path: item.markdownPath,
         markdown: item.markdown
@@ -684,6 +694,23 @@ function pathId(rawUrl: string, segment: string): string | null {
   const id = parts[index + 1];
   if (!id || id.includes(":")) return null;
   return id;
+}
+
+function canAccessCapture(
+  device: {
+    deviceId: string;
+    ownerAuthUserId?: string;
+  },
+  capture: {
+    deviceId: string;
+    ownerAuthUserId?: string;
+  }
+): boolean {
+  if (capture.deviceId === device.deviceId) {
+    return true;
+  }
+
+  return Boolean(device.ownerAuthUserId && capture.ownerAuthUserId === device.ownerAuthUserId);
 }
 
 function getRequiredEnv(name: string): string {

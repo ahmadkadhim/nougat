@@ -18,7 +18,7 @@ Ship the capture and enrichment foundation first: Chrome + Safari + iOS ingestio
 6. Build Safari Web Extension with the same capture modes and retry behavior.
 7. Build iOS Shortcut/Share Sheet flow to send URL/text from any app into the same API with offline retry.
 8. Re-implement the existing OpenClaw X bookmark sync workflow inside Convex:
-   - Schedule a twice-daily server-side job against the X API.
+   - Schedule an hourly server-side job against the X API.
    - Fetch newly added bookmarks using a durable cursor or last-seen watermark.
    - Convert bookmarks into the same canonical capture contract as manual submissions.
    - Dedupe against prior bookmark imports and existing captures for the same canonical URL/post.

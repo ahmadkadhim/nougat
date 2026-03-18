@@ -6,6 +6,7 @@ const LAST_STATUS_KEY = "knowledgeInboxLastStatus";
 const RETRY_ALARM = "knowledgeInboxRetryAlarm";
 
 const DEFAULT_SETTINGS = {
+  appOrigin: "",
   apiBaseUrl: "",
   token: "",
   deviceId: "",
@@ -50,6 +51,8 @@ async function handleMessage(message) {
       return await captureWindowTabs();
     case "CAPTURE_ALL_TABS":
       return await captureAllTabs();
+    case "PAIR_WITH_ACTIVE_TAB":
+      return await pairWithActiveTab();
     case "FLUSH_RETRY_QUEUE":
       return await flushRetryQueue();
     case "GET_LAST_STATUS":
@@ -291,6 +294,79 @@ async function getSettings() {
     ...DEFAULT_SETTINGS,
     ...(data[SETTINGS_KEY] || {})
   };
+}
+
+async function pairWithActiveTab() {
+  const [tab] = await ext.tabs.query({ active: true, currentWindow: true });
+  if (!tab?.id || typeof tab.url !== "string" || !/^https?:\/\//i.test(tab.url)) {
+    throw new Error("Open a signed-in Nougat dashboard tab first.");
+  }
+
+  const settings = await getSettings();
+  const response = await ext.tabs.sendMessage(tab.id, {
+    payload: {
+      deviceId: settings.deviceId || null,
+      sourceApp: settings.sourceApp || null
+    },
+    type: "REQUEST_PAIRING_FROM_PAGE"
+  });
+
+  if (!response?.ok) {
+    throw new Error(response?.error || "Unable to pair with the current tab.");
+  }
+
+  const payload = response.payload;
+  if (!payload || typeof payload !== "object") {
+    throw new Error("The current tab returned an invalid pairing payload.");
+  }
+
+  const apiBaseUrl = typeof payload.apiBaseUrl === "string" ? payload.apiBaseUrl.trim() : "";
+  const token = typeof payload.token === "string" ? payload.token.trim() : "";
+  const deviceId = typeof payload.deviceId === "string" ? payload.deviceId.trim() : "";
+  const sourceApp = typeof payload.sourceApp === "string" ? payload.sourceApp.trim() : detectSourceApp();
+  const claimedCaptures = typeof payload.claimedCaptures === "number" ? payload.claimedCaptures : 0;
+
+  if (!apiBaseUrl || !token || !deviceId) {
+    throw new Error("The current tab did not return usable connection settings.");
+  }
+
+  const appOrigin = new URL(tab.url).origin;
+  await ext.storage.local.set({
+    [SETTINGS_KEY]: {
+      ...settings,
+      apiBaseUrl,
+      appOrigin,
+      deviceId,
+      sourceApp,
+      token
+    }
+  });
+
+  let retriedItems = 0;
+
+  try {
+    const retryStatus = await flushRetryQueue();
+    retriedItems = retryStatus?.retried_items ?? 0;
+  } catch (error) {
+    await setLastStatus({
+      error: error?.message || String(error),
+      status: "configured_with_retry_error",
+      timestamp: Date.now()
+    });
+  }
+
+  const status = {
+    app_origin: appOrigin,
+    claimed_captures: claimedCaptures,
+    configured: true,
+    deviceId,
+    retried_items: retriedItems,
+    status: "configured",
+    timestamp: Date.now()
+  };
+  await setLastStatus(status);
+
+  return status;
 }
 
 function ensureConfigured(settings) {

@@ -12,11 +12,11 @@ if (!API_BASE) {
 
 async function main() {
   const pendingCaptures = await fetchPendingCaptureMarkdown(100);
-  const pendingKnowledge = OWNER_AUTH_USER_ID ? await fetchPendingKnowledgeMarkdown(100) : [];
+  const pendingNotes = OWNER_AUTH_USER_ID ? await fetchPendingNoteMarkdown(100) : [];
   const pendingResources = OWNER_AUTH_USER_ID ? await fetchPendingResourceMarkdown(100) : [];
   const pending = [
     ...pendingCaptures.map((doc) => ({ ...doc, kind: "capture" as const })),
-    ...pendingKnowledge.map((doc) => ({ ...doc, kind: "knowledge" as const })),
+    ...pendingNotes.map((doc) => ({ ...doc, kind: "note" as const })),
     ...pendingResources.map((doc) => ({ ...doc, kind: "resource" as const }))
   ];
 
@@ -34,8 +34,8 @@ async function main() {
 
     if (doc.kind === "capture") {
       await markCaptureExported(doc.documentId);
-    } else if (doc.kind === "knowledge") {
-      await markKnowledgeExported(doc.documentId);
+    } else if (doc.kind === "note") {
+      await markNoteExported(doc.documentId);
     } else {
       await markResourceExported(doc.documentId);
     }
@@ -64,8 +64,8 @@ async function fetchPendingCaptureMarkdown(limit: number): Promise<Array<{ docum
   return payload.documents;
 }
 
-async function fetchPendingKnowledgeMarkdown(limit: number): Promise<Array<{ documentId: string; path: string; markdown: string }>> {
-  const url = new URL("/v1/operator/knowledge-markdown/pending", API_BASE);
+async function fetchPendingNoteMarkdown(limit: number): Promise<Array<{ documentId: string; path: string; markdown: string }>> {
+  const url = new URL("/v1/operator/notes-markdown/pending", API_BASE);
   url.searchParams.set("limit", String(limit));
   if (OWNER_AUTH_USER_ID) {
     url.searchParams.set("owner_user_id", OWNER_AUTH_USER_ID);
@@ -78,7 +78,7 @@ async function fetchPendingKnowledgeMarkdown(limit: number): Promise<Array<{ doc
   });
 
   if (!res.ok) {
-    throw new Error(`Failed to fetch pending knowledge markdown: ${res.status}`);
+    throw new Error(`Failed to fetch pending notes markdown: ${res.status}`);
   }
 
   const payload = (await res.json()) as {
@@ -104,8 +104,8 @@ async function markCaptureExported(documentId: string) {
   }
 }
 
-async function markKnowledgeExported(documentId: string) {
-  const url = new URL(`/v1/operator/knowledge-markdown/${documentId}/exported`, API_BASE);
+async function markNoteExported(documentId: string) {
+  const url = new URL(`/v1/operator/notes-markdown/${documentId}/exported`, API_BASE);
   const res = await fetch(url, {
     method: "POST",
     headers: {
@@ -116,7 +116,7 @@ async function markKnowledgeExported(documentId: string) {
   });
 
   if (!res.ok) {
-    throw new Error(`Failed to mark knowledge exported for ${documentId}: ${res.status}`);
+    throw new Error(`Failed to mark note exported for ${documentId}: ${res.status}`);
   }
 }
 

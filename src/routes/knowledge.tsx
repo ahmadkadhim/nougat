@@ -1,5 +1,4 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { KnowledgeShell } from "../components/knowledge-shell";
 
 export const Route = createFileRoute("/knowledge")({
   beforeLoad: ({ context, location }) => {
@@ -12,10 +11,10 @@ export const Route = createFileRoute("/knowledge")({
         replace: true
       });
     }
+    throw redirect({
+      to: "/notes",
+      replace: true
+    });
   },
-  component: KnowledgePage
+  component: () => null
 });
-
-function KnowledgePage() {
-  return <KnowledgeShell />;
-}

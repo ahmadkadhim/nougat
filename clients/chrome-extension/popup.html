@@ -11,13 +11,14 @@
     </style>
   </head>
   <body>
+    <button id="connectCurrent">Connect To Current Tab</button>
     <button id="captureCurrent">Capture Current Tab</button>
     <button id="captureSelected">Capture Selected Tabs</button>
     <button id="captureWindow">Capture Current Window Tabs</button>
     <button id="captureAll">Capture All Open Tabs</button>
     <button id="flushQueue">Flush Retry Queue</button>
     <div id="status">Waiting...</div>
-    <div class="hint">Configure API URL + token in extension options. Non-web tabs are skipped automatically.</div>
+    <div class="hint">Secure setup: open the signed-in Nougat dashboard in the current tab, then click “Connect To Current Tab.” Extension options remain available for manual fallback.</div>
     <script src="popup.js" type="module"></script>
   </body>
 </html>

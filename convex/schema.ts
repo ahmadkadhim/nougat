@@ -20,10 +20,31 @@ const jobStatus = v.union(
 
 const reviewStatus = v.union(v.literal("pending_review"), v.literal("approved"), v.literal("rejected"));
 const markdownExportStatus = v.union(v.literal("pending"), v.literal("exported"));
+const themeName = v.union(
+  v.literal("almond"),
+  v.literal("vanilla"),
+  v.literal("hazelnut"),
+  v.literal("pistachio"),
+  v.literal("rose"),
+  v.literal("nutella"),
+  v.literal("gumdrop")
+);
+const themeMode = v.union(v.literal("light"), v.literal("dark"), v.literal("system"));
+const typographyName = v.union(v.literal("serif"), v.literal("grotesque"), v.literal("technical"));
 
 export default defineSchema({
+  userPreferences: defineTable({
+    ownerAuthUserId: v.string(),
+    themeName,
+    themeMode,
+    typographyName: v.optional(typographyName),
+    createdAt: v.number(),
+    updatedAt: v.number()
+  }).index("by_owner_auth_user_id", ["ownerAuthUserId"]),
+
   devices: defineTable({
     deviceId: v.string(),
+    ownerAuthUserId: v.optional(v.string()),
     name: v.string(),
     platform: v.string(),
     tokenHash: v.string(),
@@ -36,6 +57,7 @@ export default defineSchema({
     rotatedAt: v.optional(v.number())
   })
     .index("by_device_id", ["deviceId"])
+    .index("by_owner_status", ["ownerAuthUserId", "status"])
     .index("by_token_hash", ["tokenHash"])
     .index("by_status", ["status"]),
 
@@ -71,8 +93,11 @@ export default defineSchema({
   })
     .index("by_capture_id", ["captureId"])
     .index("by_device_hash_bucket", ["deviceId", "captureHash", "capturedBucket"])
+    .index("by_device_created_at", ["deviceId", "createdAt"])
     .index("by_canonical_url", ["canonicalUrl"])
     .index("by_owner_canonical_url", ["ownerAuthUserId", "canonicalUrl"])
+    .index("by_owner_platform_created_at", ["ownerAuthUserId", "platform", "createdAt"])
+    .index("by_owner_status_created_at", ["ownerAuthUserId", "extractionStatus", "createdAt"])
     .index("by_status", ["extractionStatus"])
     .index("by_created_at", ["createdAt"])
     .index("by_owner_created_at", ["ownerAuthUserId", "createdAt"]),
@@ -199,6 +224,7 @@ export default defineSchema({
     status: jobStatus,
     inputHash: v.optional(v.string()),
     error: v.optional(v.string()),
+    details: v.optional(v.any()),
     createdAt: v.number(),
     updatedAt: v.number(),
     startedAt: v.optional(v.number()),
@@ -234,6 +260,7 @@ export default defineSchema({
     sourceType: v.union(v.literal("system"), v.literal("manual")),
     reviewStatus,
     confidence: v.number(),
+    why: v.optional(v.string()),
     justification: v.optional(v.string()),
     createdAt: v.number(),
     updatedAt: v.number(),
@@ -243,6 +270,44 @@ export default defineSchema({
     .index("by_capture", ["captureId"])
     .index("by_owner_review_status", ["ownerAuthUserId", "reviewStatus"])
     .index("by_owner_capture_status", ["ownerAuthUserId", "captureId", "reviewStatus"]),
+
+  notes: defineTable({
+    noteId: v.string(),
+    ownerAuthUserId: v.optional(v.string()),
+    primaryCaptureId: v.string(),
+    sourceCaptureIds: v.array(v.string()),
+    sourceAuthor: v.optional(v.string()),
+    canonicalUrl: v.string(),
+    tagSlug: v.optional(v.string()),
+    title: v.string(),
+    content: v.string(),
+    sourceQuote: v.optional(v.string()),
+    reviewStatus,
+    confidence: v.number(),
+    why: v.optional(v.string()),
+    markdownPath: v.optional(v.string()),
+    markdown: v.optional(v.string()),
+    exportStatus: v.optional(markdownExportStatus),
+    legacySourceKey: v.optional(v.string()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+    approvedAt: v.optional(v.number())
+  })
+    .index("by_note_id", ["noteId"])
+    .index("by_owner_review_status", ["ownerAuthUserId", "reviewStatus"])
+    .index("by_owner_primary_capture", ["ownerAuthUserId", "primaryCaptureId"])
+    .index("by_owner_export_status", ["ownerAuthUserId", "exportStatus"])
+    .index("by_owner_legacy_source_key", ["ownerAuthUserId", "legacySourceKey"]),
+
+  noteSources: defineTable({
+    noteId: v.string(),
+    captureId: v.string(),
+    quote: v.optional(v.string()),
+    excerpt: v.optional(v.string()),
+    createdAt: v.number()
+  })
+    .index("by_note", ["noteId"])
+    .index("by_capture", ["captureId"]),
 
   knowledgeItems: defineTable({
     knowledgeItemId: v.string(),
@@ -257,6 +322,7 @@ export default defineSchema({
     sourceQuote: v.optional(v.string()),
     reviewStatus,
     confidence: v.number(),
+    why: v.optional(v.string()),
     justification: v.optional(v.string()),
     markdownPath: v.optional(v.string()),
     markdown: v.optional(v.string()),
@@ -293,9 +359,11 @@ export default defineSchema({
     assigneeType: v.union(v.literal("user"), v.literal("agent")),
     executionTarget: v.optional(v.string()),
     suggestedAction: v.optional(v.string()),
+    triggerContext: v.optional(v.string()),
     dedupeKey: v.string(),
     reviewStatus,
     confidence: v.number(),
+    why: v.optional(v.string()),
     justification: v.optional(v.string()),
     createdAt: v.number(),
     updatedAt: v.number(),
@@ -316,11 +384,14 @@ export default defineSchema({
     tagSlug: v.optional(v.string()),
     title: v.string(),
     details: v.string(),
+    mode: v.optional(v.union(v.literal("draft"), v.literal("delta"))),
     targetSystem: v.string(),
+    targetSkillRef: v.optional(v.string()),
     proposedChange: v.string(),
     dedupeKey: v.string(),
     reviewStatus,
     confidence: v.number(),
+    why: v.optional(v.string()),
     justification: v.optional(v.string()),
     createdAt: v.number(),
     updatedAt: v.number(),
@@ -350,6 +421,7 @@ export default defineSchema({
     dedupeKey: v.string(),
     reviewStatus,
     confidence: v.number(),
+    why: v.optional(v.string()),
     justification: v.optional(v.string()),
     markdownPath: v.optional(v.string()),
     markdown: v.optional(v.string()),
@@ -396,6 +468,7 @@ export default defineSchema({
     relevanceScore: v.number(),
     reviewStatus,
     confidence: v.number(),
+    why: v.optional(v.string()),
     justification: v.optional(v.string()),
     createdAt: v.number(),
     updatedAt: v.number(),
@@ -420,6 +493,7 @@ export default defineSchema({
     evidenceQuote: v.optional(v.string()),
     reviewStatus,
     confidence: v.number(),
+    why: v.optional(v.string()),
     justification: v.optional(v.string()),
     createdAt: v.number(),
     updatedAt: v.number(),
@@ -439,9 +513,22 @@ export default defineSchema({
     field: v.optional(v.string()),
     before: v.optional(v.any()),
     after: v.optional(v.any()),
+    changedFields: v.optional(v.array(v.string())),
     comment: v.optional(v.string()),
+    legacyEntityType: v.optional(v.string()),
+    legacyEntityId: v.optional(v.string()),
     createdAt: v.number()
   })
     .index("by_owner_entity", ["ownerAuthUserId", "entityType", "entityId"])
-    .index("by_entity", ["entityType", "entityId"])
+    .index("by_entity", ["entityType", "entityId"]),
+
+  bitMigrations: defineTable({
+    ownerAuthUserId: v.optional(v.string()),
+    migrationKey: v.string(),
+    status: v.union(v.literal("pending"), v.literal("completed")),
+    migratedAt: v.optional(v.number()),
+    details: v.optional(v.any()),
+    createdAt: v.number(),
+    updatedAt: v.number()
+  }).index("by_owner_migration_key", ["ownerAuthUserId", "migrationKey"])
 });

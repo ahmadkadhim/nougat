@@ -1,6 +1,10 @@
 import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
 import type { AuthSnapshot } from "../lib/auth-session";
 import { getAuthSnapshot } from "../lib/auth-session";
+import appleTouchIcon from "../assets/apple-touch-icon.png?url";
+import favicon16 from "../assets/favicon-16.png?url";
+import favicon32 from "../assets/favicon-32.png?url";
+import { createThemeBootScript } from "../lib/theme-config";
 import appCss from "../styles.css?url";
 
 export const Route = createRootRouteWithContext<{
@@ -23,13 +27,30 @@ export const Route = createRootRouteWithContext<{
       },
       {
         name: "description",
-        content: "Nougat personal knowledge capture and X bookmark sync."
+        content: "Nougat open-source capture inbox with note extraction and X bookmark sync."
       }
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "16x16",
+        href: favicon16
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32",
+        href: favicon32
+      },
+      {
+        rel: "apple-touch-icon",
+        sizes: "180x180",
+        href: appleTouchIcon
       }
     ]
   }),
@@ -38,8 +59,9 @@ export const Route = createRootRouteWithContext<{
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: createThemeBootScript() }} />
         <HeadContent />
       </head>
       <body>

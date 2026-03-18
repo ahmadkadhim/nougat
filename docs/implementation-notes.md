@@ -6,15 +6,15 @@ This file logs open questions and the assumptions used so implementation can kee
 
 ### Resources vs notes/tasks/skills
 - If a capture is mostly a standalone tool/app/repo/prompt/template recommendation, it is treated as a `resource` and does not also emit notes/tasks/skills by default.
-- If a capture contains operational advice plus named tools/resources, it can emit both a `resource` and the usual notes/tasks/skills/viewpoints.
+- If a capture contains operational advice plus named tools/resources, it can emit both a `resource` and the usual notes/tasks/skills.
 
 ### Conflicting advice
-- Contradictory advice is stored as parallel approved `sourceViewpoints`, not synthesized into one canonical answer.
-- The Knowledge view surfaces these as `Competing plays`.
+- Contradictory advice is stored as parallel approved `notes`, not synthesized into one canonical answer.
+- Notes can disagree; skills cannot.
 
 ### Evaluator quality
-- The evaluator is still heuristic-first, not LLM-backed yet.
-- Review/approval remains the main quality control layer until a model-backed evaluator is introduced.
+- The evaluator is OpenAI-backed and emits structured proposals for tags, notes, tasks, resources, skills, and author ratings.
+- Validators stay narrow and explicit; review/approval remains the final quality control layer.
 
 ### Resource metadata
 - Resource metadata is inferred from the URL/domain/text for now.
@@ -28,5 +28,4 @@ This file logs open questions and the assumptions used so implementation can kee
 ## Open questions for later
 - Should resources have a stricter typed taxonomy than the current `resourceType` string?
 - Should approved skill candidates eventually apply to local files through a diff-based approval flow?
-- Should conflicting viewpoints be linkable to one another explicitly instead of just grouped by topic?
 - Should we add external metadata fetchers for GitHub repos, Figma files, npm packages, and websites?

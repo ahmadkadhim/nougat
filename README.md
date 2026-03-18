@@ -1,13 +1,13 @@
-# Nougat (Convex-First)
+# Nougat
 
-Knowledge capture system for browser tabs + iOS share sheet, with async enrichment and markdown-first storage.
+Open-source capture inbox for browser tabs + iOS share sheet, with async enrichment and markdown-first storage.
 
 ## What is implemented
 - Convex backend with canonical capture contracts.
 - TanStack Start frontend shell with Better Auth login and an authenticated dashboard.
-- Derived evaluation pipeline for tags, knowledge notes, resources, tasks, skills, viewpoints, and author/source ratings.
-- Review queue with approve/reject/edit flow before outputs become durable.
-- Secondary views for approved tasks, knowledge items, resources, and skill candidates.
+- OpenAI-backed evaluation pipeline for tags, notes, resources, tasks, skills, and author/source ratings, with validator guards.
+- Review queue with approve/reject/edit/comment flow before bits become durable.
+- Secondary views for approved tasks, notes, resources, and skill candidates.
 - HTTP API endpoints:
   - `POST /v1/captures`
   - `POST /v1/captures/bulk`
@@ -18,7 +18,7 @@ Knowledge capture system for browser tabs + iOS share sheet, with async enrichme
 - Device-token auth + per-device rate limit.
 - Idempotency window dedupe (`capture_hash + device_id + captured_bucket`).
 - Async enrichment pipeline (fast ack + background processing).
-- Scheduled X bookmark sync (every 12 hours) feeding the same capture pipeline.
+- Scheduled X bookmark sync (every hour) feeding the same capture pipeline.
 - Source adapters:
   - X (`tweet` + `article` follow-up handling)
   - YouTube (`oEmbed` + transcript when available)
@@ -32,7 +32,7 @@ Knowledge capture system for browser tabs + iOS share sheet, with async enrichme
 ## Project structure
 - `src/`: TanStack Start routes, auth proxy route, providers, and dashboard UI.
 - `convex/`: backend schema, API routes, pipeline logic, adapters.
-- `clients/browser-extension/`: Chrome + Safari compatible WebExtension.
+- `clients/chrome-extension/`: Chrome + Safari compatible WebExtension.
 - `clients/safari-extension/`: Safari conversion target (generated via Apple's converter).
 - `clients/ios-shortcut/`: iOS Shortcut implementation docs and payload example.
 - `docs/api.md`: HTTP endpoint reference.
@@ -74,7 +74,7 @@ The app provides:
 - an authenticated dashboard at `/dashboard`
 - a review queue at `/review`
 - approved tasks at `/tasks`
-- approved knowledge items at `/knowledge`
+- approved notes at `/notes`
 - approved resources at `/resources`
 - approved skill candidates at `/skills`
 - a proxied Better Auth route at `/api/auth/*`
@@ -97,7 +97,9 @@ If you are self-hosting Nougat and want X features, you need your own X develope
 5. Open the dashboard and use `Connect X` for the user-owned connection flow, or call the operator OAuth route directly if needed.
 
 ## Register a device token
-Use extension options `Register Device` button, or call API directly:
+This is an advanced fallback for manual or headless clients. The normal extension flow is popup-initiated pairing from a signed-in dashboard tab.
+
+You can still register a raw device token directly if needed:
 
 ```bash
 curl -X POST "$INBOX_API_URL/v1/devices/register" \
@@ -117,10 +119,18 @@ npm run sync:markdown
 ```
 
 Output files are created under `nougat/YYYY/MM/DD/` for captures and notes, plus `resources/YYYY/MM/DD/` for approved resources.
-The sync script now exports capture markdown documents, approved knowledge-item markdown documents, and approved resource markdown documents.
+The sync script now exports capture markdown documents, approved note markdown documents, and approved resource markdown documents.
 
 ## Browser extension setup
-See: `clients/browser-extension/README.md`
+See: `clients/chrome-extension/README.md`
+
+Preferred flow:
+- install the extension
+- sign in to Nougat in the browser
+- keep `/dashboard` open in the current tab
+- open the extension popup and click `Connect To Current Tab`
+
+Manual API URL and device registration remain available as a fallback in the extension options page.
 
 ## iOS shortcut setup
 See: `clients/ios-shortcut/README.md`
@@ -131,7 +141,7 @@ npm test
 ```
 
 ## Notes
-- Scheduled X bookmark import uses a user-scoped X access token and runs every 12 hours via Convex cron.
+- Scheduled X bookmark import uses a user-scoped X access token and runs every hour via Convex cron.
 - Preferred X bookmark auth flow:
   - register your Convex callback URL, for example `https://<deployment>.convex.site/v1/operator/x/oauth/callback`, in the X app settings
   - open `https://<deployment>.convex.site/v1/operator/x/oauth/start`

@@ -12,6 +12,7 @@ export function getRouter() {
     scrollRestoration: true,
     defaultPreload: "intent",
     defaultPreloadStaleTime: 0,
+    defaultViewTransition: true,
     Wrap: ({ children }) => <Providers convexUrl={getRequiredClientEnv("VITE_CONVEX_URL")}>{children}</Providers>
   });
 }

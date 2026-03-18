@@ -1,6 +1,23 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildDerivedEvaluation, extractDocumentBody, normalizeResourceKey, normalizeSkillKey, normalizeTaskKey, slugifyTag, topicConflictKey } from "../convex/lib/derived.ts";
+import {
+  extractDocumentBody,
+  normalizeEvaluatorBundle,
+  normalizeResourceKey,
+  normalizeSkillKey,
+  normalizeTaskKey,
+  slugifyTag
+} from "../convex/lib/derived.ts";
+
+const baseContext = {
+  availableLinks: [
+    { title: "Cinematic Design Guide", url: "https://example.com/design-guide" },
+    { title: "acme/cold-outreach", url: "https://github.com/acme/cold-outreach" }
+  ],
+  existingTagNames: ["Design", "Cold Outreach"],
+  text: "Source text",
+  title: "Source title"
+};
 
 test("slugifyTag canonicalizes tag names", () => {
   assert.equal(slugifyTag("Cold Outreach"), "cold-outreach");
@@ -12,111 +29,225 @@ test("extractDocumentBody prefers extracted content", () => {
   assert.equal(body, "Use it first. Memory problems are discovered by running.");
 });
 
-test("buildDerivedEvaluation preserves vivid phrasing in notes and viewpoints", () => {
-  const bundle = buildDerivedEvaluation({
-    capture: {
-      captureId: "cap_1",
-      canonicalUrl: "https://x.com/test/status/1",
-      platform: "x",
-      titleHint: "OpenClaw memory note"
+test("normalizeEvaluatorBundle keeps durable notes and drops meta why scaffolding", () => {
+  const bundle = normalizeEvaluatorBundle(
+    {
+      captureAssessment: {
+        abstainReasons: [],
+        archetype: "tactic",
+        summary: "A design tactics post."
+      },
+      notes: [
+        {
+          title: "Lead with motion references",
+          content: "Keep the source texture here:\nUse video references when describing desired motion.",
+          sourceQuote: "Use videos to communicate motion.",
+          why: "This note captures a durable tactic for communicating design direction."
+        },
+        {
+          title: "Meta note",
+          content: "We formatted this into a note.",
+          why: "Preserved a vivid source quote instead of sanding it down."
+        }
+      ],
+      resources: [],
+      tags: [{ name: "Design", role: "primary", why: "Keeps this capture grouped with other design guidance." }],
+      tasks: []
     },
-    document: {
-      markdown:
-        '---\n---\n# OpenClaw memory note\n\n## Extracted Content\n"Use it first. Memory problems are discovered by running, not by designing."\n\nStop overthinking and just turn on hybrid search with temporal decay.\n\nToo many people design three-tier memory architectures on day one.'
-    },
-    existingTagNames: ["Agent Memory"]
-  });
+    baseContext
+  );
 
-  assert.equal(bundle.tags[0]?.name, "Agent Memory");
-  assert.match(bundle.knowledgeItems[0]?.content ?? "", /Memory problems are discovered by running/);
-  assert.equal(bundle.tasks[0]?.assigneeType, "agent");
-  assert.equal(bundle.viewpoints[0]?.topic, "agent memory");
+  assert.equal(bundle.notes.length, 1);
+  assert.equal(bundle.notes[0]?.title, "Lead with motion references");
+  assert.match(bundle.notes[0]?.content ?? "", /Use video references/);
+  assert.ok(bundle.validationLog.some((entry) => entry.lane === "note" && /meta/i.test(entry.reason)));
 });
 
-test("buildDerivedEvaluation extracts conflicting outreach viewpoints as separate claims", () => {
-  const bundle = buildDerivedEvaluation({
-    capture: {
-      captureId: "cap_2",
-      canonicalUrl: "https://x.com/test/status/2",
-      platform: "x",
-      titleHint: "Outbound strategy"
+test("normalizeEvaluatorBundle rejects generic advice phrased as a task", () => {
+  const bundle = normalizeEvaluatorBundle(
+    {
+      captureAssessment: {
+        abstainReasons: [],
+        archetype: "tactic",
+        summary: "A design advice post."
+      },
+      notes: [],
+      resources: [],
+      tags: [{ name: "Design", role: "primary", why: "Main topic." }],
+      tasks: [
+        {
+          assigneeType: "user",
+          details: "Don't be afraid to use videos.",
+          title: "Don't be afraid to use videos",
+          why: "This belongs in Nougat."
+        }
+      ]
     },
-    document: {
-      markdown:
-        "---\n---\n# Outbound strategy\n\n## Extracted Content\nStop overthinking and just blast 1000 cold emails. You should scale volume before polishing every line. But don't torch your reputation with sloppy targeting."
-    }
-  });
+    baseContext
+  );
 
-  assert.equal(bundle.tags[0]?.slug, "cold-outreach");
-  assert.ok(bundle.viewpoints.length >= 1);
-  assert.match(bundle.viewpoints[0]?.claim ?? "", /blast 1000 cold emails|don\'t torch your reputation/i);
+  assert.equal(bundle.tasks.length, 0);
+  assert.ok(bundle.validationLog.some((entry) => entry.lane === "task"));
 });
 
-test("task and skill dedupe keys are stable", () => {
+test("normalizeEvaluatorBundle keeps setup tasks when article-backed implementation detail is present", () => {
+  const bundle = normalizeEvaluatorBundle(
+    {
+      captureAssessment: {
+        abstainReasons: [],
+        archetype: "workflow_recommendation",
+        summary: "A linked article recommends a concrete memory stack."
+      },
+      notes: [],
+      resources: [],
+      tags: [{ name: "Agent Memory", role: "primary", why: "Primary topic." }],
+      tasks: [
+        {
+          assigneeType: "user",
+          details:
+            "1. Create an Obsidian vault for Claude session memory.\n2. Install the required plugins and configure templates in `.obsidian/plugins.json`.\n3. Add the retrieval prompt file at `prompts/memory.md` and test the stack with a new Claude session.\n4. Run `git init` to version the vault setup.",
+          executionTarget: "local-tooling",
+          suggestedAction: "set_up_stack",
+          title: "Set up Claude + Obsidian memory stack",
+          triggerContext: "When improving long-term memory for Claude sessions",
+          why: "The article recommends a concrete stack and includes implementation detail worth trying."
+        }
+      ]
+    },
+    baseContext
+  );
+
+  assert.equal(bundle.tasks.length, 1);
+  assert.match(bundle.tasks[0]?.details ?? "", /Obsidian vault/);
+});
+
+test("normalizeEvaluatorBundle rejects setup tasks that lack implementation detail", () => {
+  const bundle = normalizeEvaluatorBundle(
+    {
+      captureAssessment: {
+        abstainReasons: [],
+        archetype: "workflow_recommendation",
+        summary: "A linked article recommends a concrete memory stack."
+      },
+      notes: [],
+      resources: [],
+      tags: [{ name: "Agent Memory", role: "primary", why: "Primary topic." }],
+      tasks: [
+        {
+          assigneeType: "user",
+          details: "Try the Claude + Obsidian memory stack from the article.",
+          executionTarget: "local-tooling",
+          suggestedAction: "set_up_stack",
+          title: "Set up Claude + Obsidian memory stack",
+          triggerContext: "When improving long-term memory for Claude sessions",
+          why: "The article recommends a concrete stack."
+        }
+      ]
+    },
+    baseContext
+  );
+
+  assert.equal(bundle.tasks.length, 0);
+  assert.ok(
+    bundle.validationLog.some((entry) => entry.lane === "task" && /source-backed steps, commands, files, or configuration detail/i.test(entry.reason))
+  );
+});
+
+test("normalizeEvaluatorBundle resolves resources from source links and dedupes tags", () => {
+  const bundle = normalizeEvaluatorBundle(
+    {
+      captureAssessment: {
+        abstainReasons: [],
+        archetype: "resource_roundup",
+        summary: "A source that mentions one resource."
+      },
+      notes: [],
+      resources: [
+        {
+          details: "A guide to cinematic UI motion.",
+          name: "Cinematic Design Guide",
+          resourceType: "guide",
+          why: "The linked guide is worth keeping as a reusable resource."
+        }
+      ],
+      tags: [
+        { name: "Design", role: "primary", why: "Primary topic." },
+        { name: "design", role: "secondary", why: "Duplicate should be dropped." }
+      ],
+      tasks: []
+    },
+    baseContext
+  );
+
+  assert.equal(bundle.resources[0]?.resourceUrl, "https://example.com/design-guide");
+  assert.equal(bundle.tags.length, 1);
+});
+
+test("normalizeEvaluatorBundle only keeps coherent skill drafts", () => {
+  const valid = normalizeEvaluatorBundle(
+    {
+      captureAssessment: {
+        abstainReasons: [],
+        archetype: "framework",
+        summary: "A reusable workflow."
+      },
+      notes: [],
+      resources: [],
+      skillCandidate: {
+        details: "Turn the post into a reusable skill draft.",
+        mode: "draft",
+        proposedChange:
+          "Purpose\nCapture design references with enough context.\n\nWhen to use\nUse this when a design post contains actionable process guidance.\n\nSteps\n1. Save the reference.\n2. Add the operative constraint.\n\nCaveats\nSkip skill creation when the advice conflicts with itself.",
+        targetSystem: "agents_md",
+        title: "Capture design references",
+        why: "This is a coherent operating pattern that could become a reusable skill."
+      },
+      tags: [{ name: "Design", role: "primary", why: "Primary topic." }],
+      tasks: []
+    },
+    baseContext
+  );
+
+  const invalid = normalizeEvaluatorBundle(
+    {
+      captureAssessment: {
+        abstainReasons: [],
+        archetype: "framework",
+        summary: "A reusable workflow."
+      },
+      notes: [],
+      resources: [],
+      skillCandidate: {
+        details: "Missing sections.",
+        mode: "draft",
+        proposedChange: "Purpose\nDo the thing.",
+        targetSystem: "agents_md",
+        title: "Incomplete draft",
+        why: "This should become a skill."
+      },
+      tags: [{ name: "Design", role: "primary", why: "Primary topic." }],
+      tasks: []
+    },
+    baseContext
+  );
+
+  assert.equal(valid.skillCandidate?.mode, "draft");
+  assert.equal(invalid.skillCandidate, null);
+  assert.ok(invalid.validationLog.some((entry) => entry.lane === "skill" && /missing required sections/i.test(entry.reason)));
+});
+
+test("normalize keys remain stable for tasks, skills, and resources", () => {
   assert.equal(
     normalizeTaskKey({ assigneeType: "agent", tagSlug: "agent-memory", title: "Turn on hybrid search" }),
     normalizeTaskKey({ assigneeType: "agent", tagSlug: "agent-memory", title: "Turn on hybrid search" })
   );
 
   assert.equal(
-    normalizeSkillKey({ targetSystem: "agents_md", tagSlug: "agent-memory", title: "Refine memory guidance" }),
-    "agents-md-agent-memory-refine-memory-guidance"
+    normalizeSkillKey({ mode: "draft", targetSystem: "agents_md", tagSlug: "agent-memory", title: "Refine memory guidance" }),
+    "draft-agents-md-new-agent-memory-refine-memory-guidance"
   );
   assert.equal(
     normalizeResourceKey({ resourceUrl: "https://github.com/acme/repo" }),
     "https-github-com-acme-repo"
   );
-});
-
-test("topicConflictKey groups conflicting claims by topic", () => {
-  assert.equal(
-    topicConflictKey("cold-outreach", "Stop overthinking and just blast 1000 cold emails."),
-    "cold-outreach-stop-overthinking-and-just-blast-1000-cold-emails"
-  );
-});
-
-test("buildDerivedEvaluation files standalone tools as resources", () => {
-  const bundle = buildDerivedEvaluation({
-    capture: {
-      captureId: "cap_3",
-      canonicalUrl: "https://github.com/openclaw/hybrid-search",
-      platform: "web",
-      titleHint: "OpenClaw Hybrid Search",
-      rawPayload: {}
-    },
-    document: {
-      markdown: "---\n---\n# OpenClaw Hybrid Search\n\n## Extracted Content\nA GitHub repo for hybrid search and temporal decay memory."
-    }
-  });
-
-  assert.equal(bundle.resources.length, 1);
-  assert.equal(bundle.resources[0]?.resourceType, "github");
-  assert.equal(bundle.resources[0]?.resourceUrl, "https://github.com/openclaw/hybrid-search");
-});
-
-test("buildDerivedEvaluation can produce both playbook outputs and resources", () => {
-  const bundle = buildDerivedEvaluation({
-    capture: {
-      captureId: "cap_4",
-      canonicalUrl: "https://x.com/test/status/4",
-      platform: "x",
-      titleHint: "Outbound stack",
-      rawPayload: {
-        external_links: [
-          {
-            url: "https://github.com/acme/cold-outreach",
-            title: "acme/cold-outreach"
-          }
-        ]
-      }
-    },
-    document: {
-      markdown:
-        "---\n---\n# Outbound stack\n\n## Extracted Content\nStop overthinking and just blast 1000 cold emails, but use the acme/cold-outreach repo to keep targeting tight."
-    }
-  });
-
-  assert.ok(bundle.tasks.length >= 1);
-  assert.ok(bundle.viewpoints.length >= 1);
-  assert.ok(bundle.resources.length >= 1);
 });

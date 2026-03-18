@@ -1,11 +1,12 @@
 {
   "name": "nougat",
-  "description": "Nougat personal knowledge capture and X bookmark sync.",
+  "description": "Nougat open-source knowledge capture and X bookmark sync.",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "convex dev",
+    "dev": "convex dev --local",
+    "dev:cloud": "convex dev",
     "dev:web": "vite dev --port 3000",
     "deploy": "convex deploy",
     "build:web": "vite build",

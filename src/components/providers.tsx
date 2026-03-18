@@ -2,6 +2,7 @@ import { ConvexBetterAuthProvider } from "@convex-dev/better-auth/react";
 import { ConvexReactClient } from "convex/react";
 import { useState, type ReactNode } from "react";
 import { authClient } from "../lib/auth-client";
+import { ThemeProvider } from "./theme-provider";
 
 export function Providers({
   children,
@@ -14,7 +15,7 @@ export function Providers({
 
   return (
     <ConvexBetterAuthProvider authClient={authClient} client={client}>
-      {children}
+      <ThemeProvider>{children}</ThemeProvider>
     </ConvexBetterAuthProvider>
   );
 }

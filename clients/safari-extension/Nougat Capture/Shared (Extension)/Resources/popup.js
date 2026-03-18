@@ -1,6 +1,7 @@
 const ext = globalThis.browser ?? globalThis.chrome;
 const statusEl = document.getElementById("status");
 
+document.getElementById("connectCurrent").addEventListener("click", () => run("PAIR_WITH_ACTIVE_TAB"));
 document.getElementById("captureCurrent").addEventListener("click", () => run("CAPTURE_CURRENT_TAB"));
 document.getElementById("captureSelected").addEventListener("click", () => run("CAPTURE_SELECTED_TABS"));
 document.getElementById("captureWindow").addEventListener("click", () => run("CAPTURE_WINDOW_TABS"));
@@ -83,6 +84,14 @@ function formatStatusPayload(payload) {
 
   if (typeof payload.remaining_items === "number") {
     lines.push(`Remaining queued items: ${payload.remaining_items}`);
+  }
+
+  if (typeof payload.claimed_captures === "number") {
+    lines.push(`Claimed existing captures: ${payload.claimed_captures}`);
+  }
+
+  if (typeof payload.app_origin === "string" && payload.app_origin) {
+    lines.push(`Paired app origin: ${payload.app_origin}`);
   }
 
   if (payload.error) {

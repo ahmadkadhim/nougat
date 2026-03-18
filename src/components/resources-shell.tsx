@@ -1,28 +1,28 @@
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { useRetainedValue } from "../lib/use-retained-value";
 import { AppShell } from "./app-shell";
 import { ProvenanceBlock } from "./derived-support";
 
 export function ResourcesShell() {
   const items = useQuery(api.derived.listResources, { limit: 100 });
-
-  if (!items) {
-    return (
-      <main className="dashboard-loading">
-        <div className="status-dot" />
-        <p>Loading resources...</p>
-      </main>
-    );
-  }
+  const visibleItems = useRetainedValue(items);
+  const isRefreshing = items === undefined && visibleItems !== undefined;
 
   return (
     <AppShell
       subtitle="Resources are tools, apps, repos, prompts, plugins, templates, and design files that should not clutter the notes."
       title="Resources"
     >
-      <section className="panel list-panel">
+      <section aria-busy={isRefreshing} className="panel list-panel panel-loading-shell">
+        {!visibleItems ? (
+          <div className="dashboard-loading panel-loading">
+            <div className="status-dot" />
+            <p>Loading resources...</p>
+          </div>
+        ) : null}
         <div className="list-stack">
-          {items.map((item) => (
+          {visibleItems?.map((item) => (
             <article className="list-card" key={item.resourceId}>
               <div className="stack-row">
                 <h2>{item.name}</h2>
@@ -34,11 +34,11 @@ export function ResourcesShell() {
               </p>
               <ProvenanceBlock
                 approvedAt={item.approvedAt}
-                justification={item.justification}
                 sourceAuthor={item.sourceAuthor}
                 sourceCaptureCount={item.sourceCaptureCount}
                 sourceLabel="Open source mention"
                 sourceUrl={item.sourceUrl}
+                why={item.why}
               />
               {item.useCases.length ? (
                 <div className="pill-list">
@@ -54,7 +54,8 @@ export function ResourcesShell() {
               </a>
             </article>
           ))}
-          {items.length === 0 ? <p className="panel-copy">No approved resources yet.</p> : null}
+          {isRefreshing ? <p className="panel-meta subtle-status-row">Refreshing…</p> : null}
+          {visibleItems?.length === 0 ? <p className="panel-copy">No approved resources yet.</p> : null}
         </div>
       </section>
     </AppShell>

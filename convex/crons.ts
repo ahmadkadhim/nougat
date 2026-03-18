@@ -5,7 +5,7 @@ const crons = cronJobs();
 const digestsApi = internal.digests as any;
 const xBookmarksApi = (internal as any).xBookmarks;
 
-crons.interval("sync-x-bookmarks", { hours: 12 }, xBookmarksApi.runScheduledSync, {});
+crons.interval("sync-x-bookmarks", { hours: 1 }, xBookmarksApi.runScheduledSync, {});
 
 crons.interval(
   "generate-daily-digest",

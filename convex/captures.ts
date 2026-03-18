@@ -42,12 +42,13 @@ export const ingestCapture = mutation({
 export const ingestBulkCaptures = mutation({
   args: {
     deviceId: v.string(),
+    ownerAuthUserId: v.optional(v.string()),
     requests: v.array(captureRequestValidator)
   },
   handler: async (ctx, args) => {
     const results = [];
     for (const request of args.requests) {
-      const result = await ingestOne(ctx, args.deviceId, request, request);
+      const result = await ingestOne(ctx, args.deviceId, request, request, args.ownerAuthUserId);
       results.push(result);
     }
 
