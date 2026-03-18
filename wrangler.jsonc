@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nougatnet",
+  "compatibility_date": "2026-03-18",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "@tanstack/react-start/server-entry",
+  "observability": {
+    "enabled": true
+  },
+  "routes": [
+    {
+      "pattern": "nougatnet.com",
+      "custom_domain": true
+    }
+  ],
+  "vars": {
+    "APP_ORIGIN": "https://nougatnet.com",
+    "VITE_APP_ORIGIN": "https://nougatnet.com",
+    "CONVEX_URL": "https://pastel-crow-568.convex.cloud",
+    "VITE_CONVEX_URL": "https://pastel-crow-568.convex.cloud",
+    "CONVEX_SITE_URL": "https://pastel-crow-568.convex.site"
+  }
+}

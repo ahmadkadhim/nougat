@@ -11,6 +11,8 @@
     "deploy": "convex deploy",
     "build:web": "vite build",
     "start:web": "vite preview --port 3000",
+    "deploy:web": "npm run build:web && wrangler deploy",
+    "cf:typegen": "wrangler types",
     "test": "node --test --experimental-strip-types --experimental-specifier-resolution=node tests/**/*.test.ts",
     "sync:markdown": "node --experimental-strip-types scripts/sync-markdown.ts",
     "lint": "echo 'No linter configured yet'"
@@ -29,9 +31,11 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^5.1.0",
+    "@cloudflare/vite-plugin": "^1.29.1",
     "@types/node": "^25.3.3",
+    "@vitejs/plugin-react": "^5.1.0",
     "typescript": "^5.7.3",
-    "vite": "^7.1.9"
+    "vite": "^7.1.9",
+    "wrangler": "^4.75.0"
   }
 }

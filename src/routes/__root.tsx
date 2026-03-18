@@ -4,6 +4,7 @@ import { getAuthSnapshot } from "../lib/auth-session";
 import appleTouchIcon from "../assets/apple-touch-icon.png?url";
 import favicon16 from "../assets/favicon-16.png?url";
 import favicon32 from "../assets/favicon-32.png?url";
+import { createRuntimeEnvBootScript } from "../lib/runtime-env";
 import { createThemeBootScript } from "../lib/theme-config";
 import appCss from "../styles.css?url";
 
@@ -61,6 +62,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: createRuntimeEnvBootScript() }} />
         <script dangerouslySetInnerHTML={{ __html: createThemeBootScript() }} />
         <HeadContent />
       </head>

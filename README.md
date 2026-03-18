@@ -84,6 +84,26 @@ For local development:
 - Convex must also have `APP_ORIGIN=http://localhost:3000` set in its env so Better Auth issues non-secure localhost cookies
 - the frontend reads `VITE_APP_ORIGIN` and `VITE_CONVEX_URL` from `.env.local`
 
+## Production deploy
+This repo now supports deploying the TanStack Start frontend directly to Cloudflare Workers while keeping Convex as the backend.
+
+1. Set production env values on Convex:
+   - `APP_ORIGIN=https://nougatnet.com`
+   - `BETTER_AUTH_SECRET=<random secret>`
+   - `OPENAI_API_KEY=<your key>`
+   - `OPENAI_EVALUATOR_MODEL=<model name>`
+   - any optional X credentials you want enabled in production
+2. Deploy Convex production:
+   - `npx convex deploy --prod`
+3. Deploy the frontend Worker:
+   - `npm run deploy:web`
+4. Confirm the Worker route is attached to `nougatnet.com` in Cloudflare DNS and that the zone has no conflicting apex record.
+
+The checked-in `wrangler.jsonc` expects:
+- frontend origin: `https://nougatnet.com`
+- Convex HTTP site: `https://pastel-crow-568.convex.site`
+- Convex client URL: `https://pastel-crow-568.convex.cloud`
+
 ## X connect flow
 If you are self-hosting Nougat and want X features, you need your own X developer app and OAuth 2.0 client credentials. Those secrets are not shared by this repo.
 

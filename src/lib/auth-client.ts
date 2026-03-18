@@ -1,10 +1,8 @@
 import { createAuthClient } from "better-auth/react";
 import { convexClient } from "@convex-dev/better-auth/client/plugins";
+import { getAppOrigin } from "./runtime-env";
 
-const appOrigin =
-  typeof window !== "undefined"
-    ? window.location.origin
-    : import.meta.env.VITE_APP_ORIGIN ?? "http://localhost:3000";
+const appOrigin = getAppOrigin();
 
 export const authClient = createAuthClient({
   baseURL: new URL("/api/auth", appOrigin).toString(),
