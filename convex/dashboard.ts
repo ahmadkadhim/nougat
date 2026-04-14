@@ -31,6 +31,12 @@ const dashboardCaptureSortValidator = v.union(
   v.literal("confidence_desc")
 );
 
+type SyncIssue = {
+  kind: "reauthorize_required" | "sync_failed";
+  title: string;
+  detail: string;
+};
+
 export const getDashboardData = query({
   args: {
     captureLimit: v.optional(v.number())
@@ -66,6 +72,8 @@ export const getDashboardData = query({
       .filter((q) => q.eq(q.field("ownerAuthUserId"), undefined))
       .first();
     const topTags = await ctx.db.query("tags").withIndex("by_owner_usage", (q) => q.eq("ownerAuthUserId", user._id)).take(12);
+    const syncIssue = summarizeXSyncIssue(sync?.lastError ?? null);
+    const needsReconnect = syncIssue?.kind === "reauthorize_required";
 
     return {
       user: {
@@ -75,6 +83,8 @@ export const getDashboardData = query({
       },
       x: {
         connected: Boolean(oauth),
+        needsReconnect,
+        statusLabel: oauth ? (needsReconnect ? "Reconnect needed" : `@${oauth.username ?? "connected"}`) : "Not connected",
         username: oauth?.username ?? null,
         userId: oauth?.userId ?? null,
         scopes: oauth?.scopes ?? [],
@@ -89,7 +99,8 @@ export const getDashboardData = query({
             lastSeenTweetId: sync.lastSeenTweetId ?? null,
             lastRunAt: sync.lastRunAt ?? null,
             lastSuccessAt: sync.lastSuccessAt ?? null,
-            lastError: sync.lastError ?? null
+            lastError: sync.lastError ?? null,
+            issue: syncIssue
           }
         : null,
       stats: {
@@ -106,6 +117,33 @@ export const getDashboardData = query({
     };
   }
 });
+
+function summarizeXSyncIssue(lastError: string | null): SyncIssue | null {
+  if (!lastError) {
+    return null;
+  }
+
+  const normalized = lastError.toLowerCase();
+  const needsReconnect =
+    normalized.includes("refresh token was invalid") ||
+    normalized.includes("value passed for the token was invalid") ||
+    normalized.includes("oauth refresh token failed") ||
+    normalized.includes("do not include a refresh token");
+
+  if (needsReconnect) {
+    return {
+      kind: "reauthorize_required",
+      title: "Reconnect X to resume sync",
+      detail: "Your previous X authorization is no longer valid. Reconnect your account, then run bookmark sync again."
+    };
+  }
+
+  return {
+    kind: "sync_failed",
+    title: "Last X sync didn't finish",
+    detail: "We hit a sync error while talking to X. Try running sync again. If it keeps failing, reconnect X or check the server logs."
+  };
+}
 
 export const triggerBookmarkSync = mutation({
   args: {},

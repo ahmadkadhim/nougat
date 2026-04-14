@@ -318,6 +318,8 @@ export function DashboardShell() {
   const visibleDashboard = dashboard;
   const visibleCaptureWorkspace = captureWorkspace;
   const isRefreshingWorkspace = isDashboardLoading || isCaptureWorkspaceLoading;
+  const xNeedsReconnect = Boolean(visibleDashboard?.x.needsReconnect);
+  const canRunSync = Boolean(visibleDashboard?.x.connected) && !xNeedsReconnect;
 
   if (!visibleDashboard || !visibleCaptureWorkspace) {
     return (
@@ -449,7 +451,7 @@ export function DashboardShell() {
             <div className="monitor-stack">
               <div className="monitor-row">
                 <span>X connection</span>
-                <strong>{visibleDashboard.x.connected ? `@${visibleDashboard.x.username ?? "connected"}` : "Not connected"}</strong>
+                <strong>{visibleDashboard.x.statusLabel}</strong>
               </div>
               <div className="monitor-row">
                 <span>Last success</span>
@@ -466,20 +468,36 @@ export function DashboardShell() {
                 </div>
               ) : null}
             </div>
+            {visibleDashboard.sync?.issue ? (
+              <div
+                className={
+                  visibleDashboard.sync.issue.kind === "reauthorize_required"
+                    ? "monitor-callout monitor-callout-warning"
+                    : "monitor-callout"
+                }
+              >
+                <p className="monitor-callout-title">{visibleDashboard.sync.issue.title}</p>
+                <p className="monitor-callout-copy">{visibleDashboard.sync.issue.detail}</p>
+              </div>
+            ) : null}
             <div className="sidebar-action-row">
-              {!visibleDashboard.x.connected ? (
+              {!visibleDashboard.x.connected || xNeedsReconnect ? (
                 <button className="primary-button" disabled={isConnectPending} onClick={handleConnectX} type="button">
-                  {isConnectPending ? "Redirecting..." : "Connect X"}
+                  {isConnectPending ? "Redirecting..." : xNeedsReconnect ? "Reconnect X" : "Connect X"}
                 </button>
               ) : null}
-              <button className="secondary-button" disabled={isSyncPending} onClick={handleSyncNow} type="button">
+              <button className="secondary-button" disabled={isSyncPending || !canRunSync} onClick={handleSyncNow} type="button">
                 {isSyncPending ? "Queueing sync..." : "Run X sync"}
               </button>
             </div>
             <p className="panel-copy">To pair the browser extension, keep this dashboard tab open and use the extension popup.</p>
             {extensionPairMessage ? <p className="panel-meta">{extensionPairMessage}</p> : null}
             {extensionPairError ? <p className="monitor-error">{extensionPairError}</p> : null}
-            {visibleDashboard.sync?.lastError ? <p className="monitor-error">{visibleDashboard.sync.lastError}</p> : null}
+            {!canRunSync ? (
+              <p className="panel-meta">
+                {xNeedsReconnect ? "Reconnect X before the next bookmark sync." : "Connect X to enable bookmark sync."}
+              </p>
+            ) : null}
           </article>
         </aside>
 

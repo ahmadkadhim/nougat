@@ -1319,6 +1319,36 @@ textarea:focus-visible {
   line-height: 1.45;
 }
 
+.monitor-callout {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid var(--surface-active);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface) 82%, var(--surface-active) 18%);
+}
+
+.monitor-callout-warning {
+  border-color: color-mix(in srgb, var(--danger) 40%, var(--line) 60%);
+  background: color-mix(in srgb, var(--danger) 10%, var(--surface) 90%);
+}
+
+.monitor-callout-title,
+.monitor-callout-copy {
+  margin: 0;
+  font-family: var(--font-ui);
+}
+
+.monitor-callout-title {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.monitor-callout-copy {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 .capture-composer,
 .capture-toolbar-controls {
   display: grid;
